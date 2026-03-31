@@ -548,6 +548,7 @@ input,select,textarea{color-scheme:dark}
 /* Manifesto cards */
 .lp-mcard{
   display:flex;align-items:center;gap:10px;
+  min-height:64px;
   background:rgba(217,217,217,.15);
   backdrop-filter:blur(10px);
   -webkit-backdrop-filter:blur(10px);
@@ -579,7 +580,7 @@ input,select,textarea{color-scheme:dark}
 }
 /* Date card */
 .lp-date-card{
-  display:flex;align-items:center;gap:0;
+  display:flex;align-items:center;justify-content:center;gap:0;
   background:rgba(217,217,217,.15);
   backdrop-filter:blur(10px);
   -webkit-backdrop-filter:blur(10px);
@@ -589,7 +590,7 @@ input,select,textarea{color-scheme:dark}
   overflow:hidden;
 }
 .lp-date-num{
-  font-size:clamp(26px,3vw,42px);font-weight:800;
+  font-size:clamp(20px,2.2vw,32px);font-weight:800;
   background:linear-gradient(180deg,rgba(217,217,217,.8) 0%,rgba(115,115,115,.28) 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   line-height:1;padding-right:14px;
@@ -602,7 +603,7 @@ input,select,textarea{color-scheme:dark}
 .lp-date-right{display:flex;flex-direction:column;gap:1px;}
 .lp-date-top{font-size:8px;font-weight:700;letter-spacing:1.5px;color:rgba(217,217,217,.4);text-transform:uppercase;}
 .lp-date-month{
-  font-size:clamp(22px,2.5vw,36px);font-weight:800;
+  font-size:clamp(18px,2vw,28px);font-weight:800;
   background:linear-gradient(180deg,rgba(217,217,217,.7) 0%,rgba(115,115,115,.25) 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   line-height:1;
