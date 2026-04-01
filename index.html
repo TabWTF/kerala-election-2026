@@ -754,6 +754,114 @@ input,select,textarea{color-scheme:dark}
 
 .cand-photo{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--border);flex-shrink:0;}
 .cand-photo-placeholder{width:44px;height:44px;border-radius:50%;background:var(--surface);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+/* ══════════════════════════════════════════════════════════════════
+   KNOW YOUR POLITICS QUIZ
+══════════════════════════════════════════════════════════════════ */
+#quizOverlay{
+  position:fixed;inset:0;z-index:9800;
+  background:
+    radial-gradient(circle at top right, rgba(201,168,76,.16), transparent 28%),
+    radial-gradient(circle at bottom left, rgba(204,0,0,.12), transparent 30%),
+    linear-gradient(180deg, rgba(10,10,15,.96), rgba(6,7,12,.985));
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .35s ease, visibility .35s ease;
+}
+#quizOverlay.on{opacity:1;visibility:visible;pointer-events:auto}
+.quiz-shell{
+  width:100%;height:100%;
+  overflow:auto;
+  padding:24px;
+}
+.quiz-shell::-webkit-scrollbar{width:6px}
+.quiz-shell::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:999px}
+.quiz-frame{
+  width:min(1120px,100%);
+  min-height:calc(100vh - 48px);
+  margin:0 auto;
+  padding:28px;
+  border-radius:32px;
+  border:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(180deg, rgba(18,18,27,.88), rgba(10,10,15,.94));
+  box-shadow:0 40px 120px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.05);
+  display:flex;flex-direction:column;
+  position:relative;
+  overflow:hidden;
+}
+.quiz-frame::before{
+  content:'';
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(90deg, transparent, rgba(255,255,255,.04), transparent),
+    radial-gradient(circle at top, rgba(201,168,76,.06), transparent 40%);
+}
+.quiz-top,.quiz-body,.quiz-footer{position:relative;z-index:1}
+.quiz-top{display:flex;flex-direction:column;gap:16px;margin-bottom:26px}
+.quiz-nav{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.quiz-back,.quiz-close{
+  width:44px;height:44px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);
+  color:#fff;cursor:pointer;font-size:18px;
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:all .18s ease;
+}
+.quiz-back:hover,.quiz-close:hover{background:rgba(255,255,255,.12);border-color:rgba(201,168,76,.45)}
+.quiz-mark{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.52);font-weight:700}
+.quiz-progress-wrap{display:flex;align-items:center;gap:14px}
+.quiz-progress-copy{font-size:12px;color:rgba(255,255,255,.62);white-space:nowrap}
+.quiz-progress{
+  flex:1;height:8px;border-radius:999px;overflow:hidden;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.06)
+}
+.quiz-progress-bar{
+  height:100%;width:0%;
+  background:linear-gradient(90deg, #8f6d1b, #c9a84c 55%, #f2dfa2);
+  box-shadow:0 0 24px rgba(201,168,76,.35);
+  transition:width .3s ease;
+}
+.quiz-body{display:flex;flex:1}
+.quiz-step{width:100%;animation:quizFade .28s ease}
+@keyframes quizFade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.quiz-kicker{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#c9a84c;font-weight:700;margin-bottom:10px}
+.quiz-title{font-size:clamp(30px,5vw,54px);line-height:1.05;font-weight:800;letter-spacing:-1.2px;text-transform:uppercase;max-width:900px}
+.quiz-subtitle{font-size:15px;color:rgba(255,255,255,.62);margin-top:12px;max-width:780px;line-height:1.7}
+.quiz-panel{margin-top:28px}
+.quiz-grid{display:grid;gap:16px}
+.quiz-grid.two{grid-template-columns:1fr 1fr}
+.quiz-field{display:flex;flex-direction:column;gap:14px}
+.quiz-label{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.54);font-weight:700}
+.quiz-pills{display:flex;flex-wrap:wrap;gap:10px}
+.quiz-pill,.quiz-promise,.quiz-answer,.quiz-const-option{
+  border-radius:999px;border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);color:#fff;cursor:pointer;
+  transition:all .18s ease;
+}
+.quiz-pill,.quiz-answer{padding:12px 18px;font-size:14px;font-weight:600}
+.quiz-pill:hover,.quiz-answer:hover,.quiz-promise:hover,.quiz-const-option:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+.quiz-pill.on,.quiz-answer.on,.quiz-promise.on,.quiz-const-option.on{
+  background:rgba(201,168,76,.16);
+  border-color:rgba(201,168,76,.8);
+  color:#f8eac2;
+  box-shadow:0 0 0 1px rgba(201,168,76,.14), 0 8px 24px rgba(0,0,0,.28);
+}
+.quiz-pill.dim,.quiz-promise.dim{opacity:.35}
+.quiz-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:22px}
+.quiz-card{
+  min-height:138px;padding:18px;border-radius:24px;
+  border:1px solid rgba(255,255,255,.1);
+  background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.025));
+  cursor:pointer;transition:all .18s ease;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.quiz-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.2);background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04))}
+.quiz-card.on{border-color:rgba(201,168,76,.78);box-shadow:0 18px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(201,168,76,.2)}
+.quiz-card-icon{font-size:28px}
+.quiz-card-title{font-size:16px;font-weight:700;line-height:1.35}
+.quiz-card-meta{font-size:12px;color:rgba(255,255,255,.5)}
+.quiz-shake{animation:quizShake .22s linear 1}
+@keyframes quizShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.quiz-search{
+
 </style>
 </head>
 <body>
@@ -775,10 +883,15 @@ input,select,textarea{color-scheme:dark}
     <div class="lp-eyebrow">Kerala Legislative Assembly</div>
     <h1 class="lp-title">Election 2026</h1>
     <p class="lp-sub">140 constituencies &nbsp;·&nbsp; All candidates &nbsp;·&nbsp; Community pulse</p>
-    <button class="lp-cta" onclick="enterApp()">
-      Explore Constituencies
-      <span class="lp-cta-arrow">→</span>
-    </button>
+    <div style="display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap">
+      <button class="lp-cta" onclick="enterApp()">
+        Explore Constituencies
+        <span class="lp-cta-arrow">→</span>
+      </button>
+      <button class="lp-cta lp-cta-ghost" onclick="openQuiz()">
+        Know Your Politics
+      </button>
+    </div>
   </div>
 
   <!-- Bottom bar: manifesto cards + date -->
@@ -2590,6 +2703,897 @@ const PHOTO_MAP = {
   // After entering app, burger on the landing is no longer visible
   // but we keep drawer accessible from header if needed
 })();
+
+const QUIZ_AGE_GROUPS = ["18–25","26–35","36–50","50 and above","Prefer not to say"];
+const quizState = {
+  step:1,
+  age:"",
+  constituency:"",
+  constituencyQuery:"",
+  focus:[],
+  axis:[null,null,null,null,null,null],
+  axisCursor:0,
+  promises:[],
+  showMore:false,
+};
+
+
+const AC = {LDF:"#DC2626",UDF:"#2563EB",NDA:"#EA580C",IND:"#6B7280"};
+const PC = {"CPI(M)":"#DC2626","CPI":"#B91C1C","Con(S)":"#DC2626","KC(M)":"#DC2626","RSP":"#DC2626","INC":"#2563EB","IUML":"#1D4ED8","KC":"#3B82F6","BJP":"#EA580C","IND":"#6B7280"};
+// ── Party symbols ──────────────────────────────────────────────────────────
+const PARTY_SYMBOLS={
+  'CPI(M)':'☭','CPI':'☭',
+  'INC':'✋','IUML':'☪',
+  'BJP':'🪷','NDA':'🪷',
+  'RSP':'⚙️','NCP':'◉','NCP(SC)':'◉',
+  'KC(M)':'◈','JD(U)':'◈','Con(S)':'◉',
+  'KC':'◈','IND':'◆','NOTA':'◆'
+};
+function pSym(party){return PARTY_SYMBOLS[party]||'◉';}
+
+// ── SVG person avatar ──────────────────────────────────────────────────────
+function avSVG(bgColor){
+  return '<div class="av" style="background:'+bgColor+'"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="9" r="4" fill="rgba(255,255,255,0.92)"/><path d="M4 21c0-4.418 3.582-8 8-8s8 3.582 8 8" fill="rgba(255,255,255,0.75)"/></svg></div>';
+}
+
+
+const DB = {
+  "Kasaragod":[12.35,12.70,74.85,75.15],"Kannur":[11.65,12.05,75.25,75.85],
+  "Wayanad":[11.45,11.80,75.80,76.35],"Kozhikode":[11.10,11.55,75.55,76.10],
+  "Malappuram":[10.75,11.20,75.85,76.50],"Palakkad":[10.45,11.05,76.35,77.15],
+  "Thrissur":[10.25,10.80,75.95,76.70],"Ernakulam":[9.75,10.25,76.10,76.65],
+  "Idukki":[9.55,10.10,76.75,77.30],"Kottayam":[9.35,9.85,76.30,76.85],
+  "Alappuzha":[9.20,9.65,76.15,76.60],"Pathanamthitta":[9.00,9.50,76.55,77.10],
+  "Kollam":[8.65,9.10,76.35,76.95],"Thiruvananthapuram":[8.15,8.75,76.75,77.15],
+};
+
+function coords(c){
+  const b=DB[c.district]; if(!b) return [10.0,76.5];
+  const dc=C.filter(x=>x.district===c.district);
+  const i=dc.findIndex(x=>x.id===c.id),n=dc.length;
+  const cols=Math.ceil(Math.sqrt(n*0.6)),rows=Math.ceil(n/cols);
+  const row=Math.floor(i/cols),col=i%cols;
+  return [b[0]+(b[1]-b[0])*(row+0.5)/rows, b[2]+(b[3]-b[2])*(col+0.5)/cols];
+}
+
+let centroidMap={};
+
+function buildDistrictOverlay(){
+  const seen=new Set();const dists=[];
+  C.forEach(c=>{if(!seen.has(c.district)){seen.add(c.district);dists.push(c.district);}});
+  const row=document.getElementById('distPillsRow');
+  row.innerHTML=dists.map(dist=>{
+    const seats=C.filter(x=>x.district===dist);
+    const ldf=seats.filter(x=>x.alliance==='LDF').length;
+    const udf=seats.filter(x=>x.alliance==='UDF').length;
+    const col=ldf>=udf?'var(--ldf)':'var(--udf)';
+    return`<button class="dist-pill" data-dist="${dist}" onclick="selectDistrict('${dist}',this)">
+      <span class="dist-pill-dot" style="background:${col}"></span>
+      ${dist}
+      <span class="dist-pill-ct">${seats.length}</span>
+    </button>`;
+  }).join('');
+  renderMapCards(C);
+}
+
+// ── Render cards below map ─────────────────────────────────────────
+function renderMapCards(list){
+  const grid=document.getElementById('mapCardGrid');
+  const lbl=document.getElementById('mapCardsLabel');
+  if(!grid)return;
+  if(list.length===140){lbl.textContent='All 140 Constituencies';}
+  else{lbl.textContent=list.length+' Constituency'+(list.length!==1?'s':'')+' · '+list[0].district;}
+  grid.innerHTML=list.map(cardH).join('');
+}
+
+// ── Constituency name labels on map ───────────────────────────────
+let constLabelGroup=null;
+function showConstLabels(dist){
+  clearConstLabels();
+  if(!window._kedMap)return;
+  constLabelGroup=L.layerGroup().addTo(window._kedMap);
+  C.filter(x=>x.district===dist).forEach(c=>{
+    const pos=centroidMap[c.id];
+    if(!pos)return;
+    const icon=L.divIcon({html:'<div class="const-map-label">'+c.name+'</div>',className:'',iconSize:[0,0],iconAnchor:[0,0]});
+    L.marker(pos,{icon,interactive:false}).addTo(constLabelGroup);
+  });
+}
+function clearConstLabels(){
+  if(constLabelGroup&&window._kedMap){window._kedMap.removeLayer(constLabelGroup);constLabelGroup=null;}
+}
+
+function selectDistrict(dist,btn){
+  const wasActive=btn.classList.contains('active');
+  document.querySelectorAll('.dist-pill').forEach(b=>b.classList.remove('active'));
+  clearConstLabels();
+  if(wasActive){resetMapView();return;}
+  btn.classList.add('active');
+  // Zoom map
+  const bounds=window._districtBoundsMap&&window._districtBoundsMap[dist];
+  if(bounds&&window._kedMap)window._kedMap.fitBounds(bounds,{padding:[60,60],maxZoom:11,animate:true});
+  // Show constituency name labels on map polygons
+  setTimeout(()=>showConstLabels(dist),400);
+  // Filter and render cards below map
+  const seats=C.filter(x=>x.district===dist);
+  renderMapCards(seats);
+}
+
+function jumpToConst(id){
+  const c=C.find(x=>x.id===id);
+  if(!c)return;
+  const pos=centroidMap[id];
+  if(pos&&window._kedMap){window._kedMap.flyTo(pos,13);setTimeout(()=>om(c),600);}
+  else om(c);
+}
+
+function resetMapView(){
+  document.querySelectorAll('.dist-pill').forEach(b=>b.classList.remove('active'));
+  clearConstLabels();
+  if(window._kedMap)window._kedMap.flyTo([10.5,76.2],7);
+  renderMapCards(C);
+}
+
+
+
+function mapSearch(q){
+  const drop=document.getElementById('mapDrop');
+  if(!q||!q.trim()){drop.style.display='none';return;}
+  const matches=C.filter(c=>c.name.toLowerCase().includes(q.toLowerCase())||c.district.toLowerCase().includes(q.toLowerCase())).slice(0,10);
+  if(!matches.length){drop.style.display='none';return;}
+  drop.innerHTML=matches.map(c=>{
+    const col=AC[c.alliance]||'#888';
+    return`<div class="map-drop-item" onclick="mapJump(${c.id})"><span class="mdi-name">${c.name}</span><span style="font-size:10px;background:${col};color:#fff;padding:1px 7px;border-radius:100px;font-weight:600">${c.alliance}</span><span class="mdi-sub">${c.district} &middot; AC ${c.ac}</span></div>`;
+  }).join('');
+  drop.style.display='block';
+}
+
+function mapJump(id){
+  const c=C.find(x=>x.id===id);
+  if(!c)return;
+  document.getElementById('mapSrch').value=c.name;
+  document.getElementById('mapDrop').style.display='none';
+  const pos=centroidMap[id];
+  if(pos&&window._kedMap){
+    window._kedMap.flyTo(pos,12);
+    setTimeout(()=>om(c),700);
+  } else {
+    om(c);
+  }
+}
+
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.map-search-wrap'))document.getElementById('mapDrop').style.display='none';
+});
+
+let curC=null;
+
+function quizNorm(value){
+  return String(value||'').toLowerCase().replace(/[^a-z0-9]+/g,'').trim();
+}
+function escapeHtml(value){
+  return String(value||'').replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+}
+function parseCSV(text){
+  const rows=[]; let row=[]; let cell=''; let inQuotes=false;
+  for(let i=0;i<text.length;i++){
+    const ch=text[i], next=text[i+1];
+    if(ch==='"'){
+      if(inQuotes && next==='"'){cell+='"';i++;}
+      else inQuotes=!inQuotes;
+    }else if(ch===',' && !inQuotes){
+      row.push(cell); cell='';
+    }else if((ch==='\n' || ch==='\r') && !inQuotes){
+      if(ch==='\r' && next==='\n')i++;
+      row.push(cell); cell='';
+      if(row.some(v=>String(v).trim()!==''))rows.push(row);
+      row=[];
+    }else{
+      cell+=ch;
+    }
+  }
+  if(cell.length || row.length){row.push(cell); if(row.some(v=>String(v).trim()!==''))rows.push(row);}
+  const [header,...lines]=rows;
+  return lines.map(line=>Object.fromEntries(header.map((key,idx)=>[key.trim(), (line[idx]||'').trim()])));
+}
+async function loadQuizData(){
+  const load = async (path) => {
+    const res = await fetch(path, {cache:'no-store'});
+    if(!res.ok) throw new Error(path);
+    return parseCSV(await res.text());
+  };
+  try{
+    const [categories, questions, promises] = await Promise.all([
+      load('data/quiz_categories.csv'),
+      load('data/quiz_questions.csv'),
+      load('data/quiz_promises.csv'),
+    ]);
+    if(categories.length){
+      QUIZ_CATEGORIES = categories.map(item=>({id:item.id, icon:item.icon, label:item.label}));
+    }
+    if(questions.length){
+      QUIZ_QUESTIONS = questions.map(item=>({
+        id:item.id,
+        text:item.text,
+        agreeEconomic:Number(item.agreeEconomic||0),
+        disagreeEconomic:Number(item.disagreeEconomic||0),
+        agreeSocial:Number(item.agreeSocial||0),
+        disagreeSocial:Number(item.disagreeSocial||0),
+      }));
+    }
+    if(promises.length){
+      QUIZ_PROMISES = promises.map(item=>({
+        id:item.id,
+        alliance:item.alliance,
+        category:item.category,
+        text:item.text,
+        source:item.source,
+      }));
+    }
+  }catch(e){
+    // Fallback to inline defaults when CSV files are not available.
+  }
+}
+function getQuizOverlay(){return document.getElementById('quizOverlay');}
+function getQuizRoot(){return document.getElementById('quizRoot');}
+function getQuizVisible(){return getQuizOverlay()?.classList.contains('on');}
+function resetQuizState(){
+  quizState.step=1;
+  quizState.age="";
+  quizState.constituency="";
+  quizState.constituencyQuery="";
+  quizState.focus=[];
+  quizState.axis=[null,null,null,null,null,null];
+  quizState.axisCursor=0;
+  quizState.promises=[];
+  quizState.showMore=false;
+}
+function syncQuizURL(open){
+  const u=new URL(location);
+  if(open)u.searchParams.set('tab','quiz');
+  else if(u.searchParams.get('tab')==='quiz')u.searchParams.set('tab','map');
+  history.replaceState({},'',u);
+}
+function openQuiz(){
+  const overlay=getQuizOverlay();
+  if(!overlay)return;
+  overlay.classList.add('on');
+  overlay.setAttribute('aria-hidden','false');
+  syncQuizURL(true);
+  renderQuiz();
+}
+function closeQuiz(){
+  const overlay=getQuizOverlay();
+  if(!overlay)return;
+  overlay.classList.remove('on');
+  overlay.setAttribute('aria-hidden','true');
+  syncQuizURL(false);
+}
+function retakeQuiz(){
+  resetQuizState();
+  renderQuiz();
+}
+function setQuizAge(value){quizState.age=value;renderQuiz();}
+function setQuizConstituency(value){
+  quizState.constituency=value;
+  quizState.constituencyQuery=value;
+  renderQuiz();
+}
+function setQuizConstituencyQuery(value){
+  quizState.constituencyQuery=value;
+  if(!value)quizState.constituency="";
+  renderQuiz();
+}
+function toggleQuizFocus(value){
+  const idx=quizState.focus.indexOf(value);
+  if(idx>=0)quizState.focus.splice(idx,1);
+  else if(quizState.focus.length<3)quizState.focus.push(value);
+  else{
+    const panel=document.querySelector('.quiz-card-grid');
+    if(panel){panel.classList.remove('quiz-shake');void panel.offsetWidth;panel.classList.add('quiz-shake');}
+    return;
+  }
+  renderQuiz();
+}
+function answerQuizQuestion(index,value){
+  quizState.axis[index]=value;
+  const nextUnanswered=quizState.axis.findIndex((item, idx)=>item===null && idx>index);
+  if(nextUnanswered>=0)quizState.axisCursor=nextUnanswered;
+  else quizState.axisCursor=index;
+  renderQuiz();
+}
+function moveQuizAxis(delta){
+  const next=Math.max(0,Math.min(QUIZ_QUESTIONS.length-1,quizState.axisCursor+delta));
+  quizState.axisCursor=next;
+  renderQuiz();
+}
+function toggleQuizPromise(id){
+  const idx=quizState.promises.indexOf(id);
+  if(idx>=0)quizState.promises.splice(idx,1);
+  else if(quizState.promises.length<10)quizState.promises.push(id);
+  else return;
+  renderQuiz();
+}
+function quizCanContinue(){
+  if(quizState.step===1)return true;
+  if(quizState.step===2)return quizState.focus.length>=1;
+  if(quizState.step===3)return quizState.axis.every(x=>x!==null);
+  if(quizState.step===4)return quizState.promises.length>=3;
+  return true;
+}
+function nextQuizStep(){
+  if(quizState.step===3 && !quizCanContinue()){
+    const firstMissing=quizState.axis.findIndex(item=>item===null);
+    if(firstMissing>=0){
+      quizState.axisCursor=firstMissing;
+      renderQuiz();
+      showT('Please answer all 6 questions to continue.');
+    }
+    return;
+  }
+  if(!quizCanContinue())return;
+  quizState.step=Math.min(5,quizState.step+1);
+  renderQuiz();
+}
+function prevQuizStep(){
+  if(quizState.step===3&&quizState.axisCursor>0&&quizState.axis[quizState.axisCursor]===null){
+    quizState.axisCursor-=1;
+    renderQuiz();
+    return;
+  }
+  quizState.step=Math.max(1,quizState.step-1);
+  renderQuiz();
+}
+function getQuizFilteredConstituencies(){
+  const q=quizNorm(quizState.constituencyQuery);
+  return QUIZ_CONSTITUENCIES.map(group=>{
+    const seats=!q?group.seats:group.seats.filter(name=>quizNorm(name).includes(q));
+    return {...group,seats};
+  }).filter(group=>group.seats.length);
+}
+function findQuizConstituencyRecord(name){
+  if(!name)return null;
+  const raw=quizNorm(name);
+  const resolved=QUIZ_CONSTITUENCY_ALIASES[raw]?quizNorm(QUIZ_CONSTITUENCY_ALIASES[raw]):raw;
+  return C.find(c=>quizNorm(c.name)===resolved) || null;
+}
+function getQuizConstituencyCandidates(name){
+  const record=findQuizConstituencyRecord(name);
+  if(!record)return [];
+  return (CANDS26[record.id]||[]).map(item=>({
+    name:item.name,
+    party:item.party,
+    alliance:item.alliance==='NDA'?'BJP':item.alliance,
+    color:item.alliance==='LDF'?'#cc0000':item.alliance==='UDF'?'#2563EB':'#FF6600',
+  }));
+}
+function getQuizCompass(){
+  let economic=0,social=0;
+  quizState.axis.forEach((answer, index)=>{
+    const q=QUIZ_QUESTIONS[index];
+    if(!q || !answer) return;
+    if(answer==='Agree'){
+      economic+=Number(q.agreeEconomic||0);
+      social+=Number(q.agreeSocial||0);
+    }else if(answer==='Disagree'){
+      economic+=Number(q.disagreeEconomic||0);
+      social+=Number(q.disagreeSocial||0);
+    }
+  });
+  economic=Math.max(-3,Math.min(3,economic));
+  social=Math.max(-3,Math.min(3,social));
+  return {economic,social};
+}
+function getQuizResults(){
+  const picked=QUIZ_PROMISES.filter(item=>quizState.promises.includes(item.id));
+  const total=picked.length||1;
+  const results=['LDF','UDF','BJP'].map(key=>{
+    const matches=picked.filter(item=>item.alliance===key);
+    return {
+      key,
+      label:QUIZ_ALLIANCES[key].label,
+      color:QUIZ_ALLIANCES[key].color,
+      matched:matches.length,
+      score:Math.round(matches.length/total*100),
+      promises:matches.slice(0,3),
+    };
+  });
+  const top=Math.max(...results.map(r=>r.score));
+  return results.map(item=>({...item, highlight:item.score===top && top>0, tie:results.filter(r=>r.score===top).length>1 && item.score===top}));
+}
+function shareQuizResult(){
+  const results=getQuizResults().sort((a,b)=>b.score-a.score);
+  const top=results[0];
+  const link=new URL(location.href);
+  link.searchParams.set('tab','quiz');
+  const text=`I took the Kerala 2026 Political Alignment quiz. My top alignment: ${top.label} (${top.score}% match). Curious about yours? ${link.toString()}`;
+  if(navigator.share){navigator.share({text}).catch(()=>{});return;}
+  if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>showT('Alignment text copied.'));return;}
+  window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank');
+}
+function quizPromiseSort(item){
+  return quizState.focus.includes(item.category)?0:1;
+}
+function quizButtonLabel(){
+  if(quizState.step===4)return 'See My Alignment →';
+  return 'Continue →';
+}
+function quizProgressPct(){return Math.min(100,(quizState.step/4)*100);}
+function renderQuiz(){
+  const root=getQuizRoot();
+  if(!root)return;
+  const showProgress=quizState.step<=4;
+  const filteredGroups=getQuizFilteredConstituencies();
+  const axisQuestion=QUIZ_QUESTIONS[quizState.axisCursor];
+  const relevantPromises=QUIZ_PROMISES.filter(p=>quizState.focus.includes(p.category));
+  const otherPromises=QUIZ_PROMISES.filter(p=>!quizState.focus.includes(p.category));
+  const visiblePromises=[...relevantPromises,...(quizState.showMore?otherPromises:[])];
+  const results=getQuizResults();
+  const compass=getQuizCompass();
+  const candidates=getQuizConstituencyCandidates(quizState.constituency);
+  let body='';
+  if(quizState.step===1){
+    body=`
+      <div class="quiz-step">
+        <div class="quiz-kicker">Step 1</div>
+        <div class="quiz-title">Before we begin, tell us a little about yourself</div>
+        <div class="quiz-subtitle">This helps us show you relevant candidates and context. No data is stored or shared.</div>
+        <div class="quiz-panel quiz-grid two">
+          <div class="quiz-field">
+            <div class="quiz-label">Your Age Group</div>
+            <div class="quiz-pills">
+              ${QUIZ_AGE_GROUPS.map(item=>`<button class="quiz-pill ${quizState.age===item?'on':''}" onclick="setQuizAge('${item.replace(/'/g,"&#39;")}')">${item}</button>`).join('')}
+            </div>
+          </div>
+          <div class="quiz-field">
+            <div class="quiz-label">Your Constituency</div>
+            <div class="quiz-search">
+              <input type="text" value="${escapeHtml(quizState.constituencyQuery)}" placeholder="Search all 140 constituencies" oninput="setQuizConstituencyQuery(this.value)" />
+            </div>
+            <div class="quiz-const-list">
+              ${filteredGroups.length?filteredGroups.map(group=>`
+                <div class="quiz-const-group">
+                  <div class="quiz-const-district">${group.district}</div>
+                  <div class="quiz-const-options">
+                    ${group.seats.map(seat=>`<button class="quiz-const-option ${quizState.constituency===seat?'on':''}" onclick="setQuizConstituency('${seat.replace(/'/g,"&#39;")}')">${seat}</button>`).join('')}
+                  </div>
+                </div>`).join(''):`<div class="quiz-selected-note">No constituencies match that search.</div>`}
+            </div>
+            <div class="quiz-selected-note">${quizState.constituency?`Selected: ${escapeHtml(quizState.constituency)}`:'You can leave this blank and continue.'}</div>
+          </div>
+        </div>
+      </div>`;
+  }else if(quizState.step===2){
+    body=`
+      <div class="quiz-step">
+        <div class="quiz-kicker">Step 2</div>
+        <div class="quiz-title">What kind of Kerala do you believe in?</div>
+        <div class="quiz-subtitle">Choose up to 3 areas that matter most to you. We'll personalise the next step around these.</div>
+        <div class="quiz-counter">${quizState.focus.length} of 3 selected</div>
+        <div class="quiz-card-grid">
+          ${QUIZ_CATEGORIES.map(item=>`
+            <button class="quiz-card ${quizState.focus.includes(item.id)?'on':''}" onclick="toggleQuizFocus('${item.id}')">
+              <div class="quiz-card-icon">${item.icon}</div>
+              <div class="quiz-card-title">${item.label}</div>
+              <div class="quiz-card-meta">${quizState.focus.includes(item.id)?'Selected':'Tap to include'}</div>
+            </button>`).join('')}
+        </div>
+      </div>`;
+  }else if(quizState.step===3){
+    body=`
+      <div class="quiz-step">
+        <div class="quiz-kicker">Step 3</div>
+        <div class="quiz-title">A few quick questions</div>
+        <div class="quiz-subtitle">Go with your gut. There are no right or wrong answers.</div>
+        <div class="quiz-axis-card">
+          <div class="quiz-axis-index">Question ${quizState.axisCursor+1} of ${QUIZ_QUESTIONS.length}</div>
+          <div class="quiz-axis-question">${escapeHtml(axisQuestion?.text||'')}</div>
+          <div class="quiz-selected-note" style="margin-top:10px">${quizState.axis.filter(Boolean).length} of ${QUIZ_QUESTIONS.length} answered</div>
+          <div class="quiz-answer-row">
+            ${['Agree','Neutral','Disagree'].map(choice=>`<button class="quiz-answer ${quizState.axis[quizState.axisCursor]===choice?'on':''}" onclick="answerQuizQuestion(${quizState.axisCursor},'${choice}')">${choice}</button>`).join('')}
+          </div>
+          <div class="quiz-axis-track">
+            <span>${quizState.axisCursor>0?'<button class="quiz-secondary" onclick="moveQuizAxis(-1)">Previous Question</button>':''}</span>
+            <span>${quizState.axisCursor<QUIZ_QUESTIONS.length-1?'<button class="quiz-secondary" onclick="moveQuizAxis(1)">Next Question</button>':''}</span>
+          </div>
+        </div>
+      </div>`;
+  }else if(quizState.step===4){
+    body=`
+      <div class="quiz-step">
+        <div class="quiz-kicker">Step 4</div>
+        <div class="quiz-title">What do you want to see happen in Kerala?</div>
+        <div class="quiz-subtitle">These are actual promises made by parties in their 2026 manifestos and public statements. Select up to 10 that matter most to you.</div>
+        <div class="quiz-counter">${quizState.promises.length} of 10 selected</div>
+        <div class="quiz-tag-grid">
+          ${visiblePromises.sort((a,b)=>quizPromiseSort(a)-quizPromiseSort(b)).map(item=>{
+            const selected=quizState.promises.includes(item.id);
+            const dim=!selected && quizState.promises.length>=10;
+            return `<button class="quiz-promise ${selected?'on':''} ${dim?'dim':''}" onclick="toggleQuizPromise('${item.id}')">
+              <span>${escapeHtml(item.text)}</span>
+              <span class="quiz-promise-source">${escapeHtml(item.source)}</span>
+            </button>`;
+          }).join('')}
+        </div>
+        ${otherPromises.length?`<button class="quiz-see-more" onclick="quizState.showMore=!quizState.showMore;renderQuiz()">${quizState.showMore?'Show less':'See more'}</button>`:''}
+      </div>`;
+  }else{
+    body=`
+      <div class="quiz-step">
+        <div class="quiz-kicker">Your Results</div>
+        <div class="quiz-title">Your Political Alignment</div>
+        <div class="quiz-subtitle">Based on your values and priorities, here's how Kerala's alliances align with what matters to you.</div>
+        <div class="quiz-results-grid">
+          ${results.map(item=>`
+            <div class="quiz-result-card ${item.highlight?'highlight':''}">
+              <div class="quiz-result-glow" style="background:${item.color}"></div>
+              <div class="quiz-result-top">
+                <div>
+                  <div class="quiz-result-label">Alliance</div>
+                  <div class="quiz-result-name">${item.label}</div>
+                </div>
+                ${item.highlight?`<div class="quiz-result-badge">${item.tie?'Tied closest alignment':'Closest alignment'}</div>`:''}
+              </div>
+              <div class="quiz-result-score">${item.score}%</div>
+              <div class="quiz-bar"><div class="quiz-bar-fill" style="width:${item.score}%;background:${item.color}"></div></div>
+              <div class="quiz-match-copy">${item.matched} of ${quizState.promises.length||0} selected promises align here</div>
+              <div class="quiz-match-tags">
+                ${(item.promises.length?item.promises:[{text:'No direct manifesto overlap in your selections.'}]).map(p=>`<span class="quiz-match-tag">${escapeHtml(p.text)}</span>`).join('')}
+              </div>
+            </div>`).join('')}
+        </div>
+        <div class="quiz-compass-wrap">
+          <div class="quiz-compass-card">
+            <div class="quiz-section-title">Political Compass</div>
+            <div class="quiz-compass">
+              <div class="quiz-axis-end left">More Government-Led</div>
+              <div class="quiz-axis-end right">More Market-Led</div>
+              <div class="quiz-axis-end top">More Traditional</div>
+              <div class="quiz-axis-end bottom">More Progressive</div>
+              <div class="quiz-dot user" style="left:${50+(compass.economic/3)*40}%;top:${50-(compass.social/3)*40}%"></div>
+              <div class="quiz-dot ldf" style="left:${50+(QUIZ_ALLIANCES.LDF.compass.x/3)*40}%;top:${50-(QUIZ_ALLIANCES.LDF.compass.y/3)*40}%"></div>
+              <div class="quiz-dot udf" style="left:${50+(QUIZ_ALLIANCES.UDF.compass.x/3)*40}%;top:${50-(QUIZ_ALLIANCES.UDF.compass.y/3)*40}%"></div>
+              <div class="quiz-dot bjp" style="left:${50+(QUIZ_ALLIANCES.BJP.compass.x/3)*40}%;top:${50-(QUIZ_ALLIANCES.BJP.compass.y/3)*40}%"></div>
+              <div class="quiz-compass-label-x">More Government-Led ←→ More Market-Led</div>
+              <div class="quiz-compass-label-y">More Progressive ←→ More Traditional</div>
+            </div>
+            <div class="quiz-compass-legend">
+              <div class="quiz-legend-item"><span class="quiz-legend-swatch" style="background:#f6e7b4"></span>You</div>
+              <div class="quiz-legend-item"><span class="quiz-legend-swatch" style="background:#cc0000"></span>LDF</div>
+              <div class="quiz-legend-item"><span class="quiz-legend-swatch" style="background:#2563EB"></span>UDF</div>
+              <div class="quiz-legend-item"><span class="quiz-legend-swatch" style="background:#FF6600"></span>BJP</div>
+            </div>
+          </div>
+          <div class="quiz-const-card">
+            <div class="quiz-section-title">In Your Constituency</div>
+            ${quizState.constituency?`
+              <div class="quiz-candidate-name" style="margin-bottom:10px">${escapeHtml(quizState.constituency)}</div>
+              ${candidates.length?`<div class="quiz-const-listing">
+                ${candidates.map(item=>`<div class="quiz-candidate-card">
+                  <div class="quiz-candidate-name">${escapeHtml(item.name)}</div>
+                  <div class="quiz-candidate-meta" style="color:${item.color}">${escapeHtml(item.party)} · ${escapeHtml(item.alliance)}</div>
+                </div>`).join('')}
+              </div>`:`<div class="quiz-selected-note">Candidate data is not available yet for this constituency.</div>`}
+            `:`<div class="quiz-selected-note">Add a constituency in Step 1 to see all contesting candidates here.</div>`}
+          </div>
+        </div>
+        <div class="quiz-disclaimer">This tool is for civic awareness only. It reflects alignment between your stated priorities and publicly available party manifestos and statements. It does not constitute political advice or endorsement of any candidate or alliance. All promise data is sourced from published manifestos. Kerala Election 2026 is a non-partisan platform.</div>
+        <div class="quiz-action-row">
+          <button class="quiz-next" onclick="shareQuizResult()">Share My Alignment</button>
+          <button class="quiz-secondary" onclick="retakeQuiz()">Retake Quiz</button>
+          <button class="quiz-secondary" onclick="closeQuiz();enterApp();sw('map')">Explore Constituencies</button>
+        </div>
+      </div>`;
+  }
+  root.innerHTML=`
+    <div class="quiz-frame">
+      <div class="quiz-top">
+        <div class="quiz-nav">
+          ${quizState.step>1&&quizState.step<5?`<button class="quiz-back" onclick="${quizState.step===3&&quizState.axisCursor>0?`moveQuizAxis(-1)`:`prevQuizStep()`}" aria-label="Back">←</button>`:'<div style="width:44px"></div>'}
+          <div class="quiz-mark">Know Your Politics</div>
+          <button class="quiz-close" onclick="closeQuiz()" aria-label="Close">×</button>
+        </div>
+        ${showProgress?`
+          <div class="quiz-progress-wrap">
+            <div class="quiz-progress-copy">Step ${quizState.step} of 4</div>
+            <div class="quiz-progress"><div class="quiz-progress-bar" style="width:${quizProgressPct()}%"></div></div>
+          </div>`:''}
+      </div>
+      <div class="quiz-body">${body}</div>
+      ${quizState.step<5?`
+        <div class="quiz-footer">
+          <div class="quiz-footer-note">${quizState.step===1?'Both fields are optional.' : quizState.step===2?'Choose at least 1 and up to 3.' : quizState.step===3?'All 6 answers are required before continuing.' : 'Choose at least 3 and up to 10 promises.'}</div>
+          <button class="quiz-next" ${quizCanContinue()?'':'disabled'} onclick="nextQuizStep()">${quizButtonLabel()}</button>
+        </div>`:''}
+    </div>`;
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  initCD(); fillFilters(); fc(); fillVoteDrop(); initBars(); buildDistrictOverlay();
+  initMap();
+  document.getElementById('lsync').textContent=new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+  const p=new URLSearchParams(location.search);
+  if(p.get('c')){const x=C.find(z=>z.id===+p.get('c'));if(x){sw('seats');setTimeout(()=>om(x),300);}}
+  loadQuizData().finally(()=>{
+    renderQuiz();
+    if(p.get('tab')==='quiz')openQuiz();
+    else if(p.get('tab')) sw(p.get('tab'));
+  });
+});
+
+function initCD(){
+  const t=new Date('2026-04-09T07:00:00+05:30');
+  function tick(){const d=t-Date.now();if(d<=0){document.getElementById('cdNum').textContent='Today';return;}document.getElementById('cdNum').textContent=Math.floor(d/86400000)+'d '+Math.floor((d%86400000)/3600000)+'h';}
+  tick();setInterval(tick,60000);rvc();
+}
+function rvc(){const v=JSON.parse(localStorage.getItem('ked3_v')||'{}');const t=Object.values(v).reduce((a,b)=>a+b,0);document.getElementById('tvh').textContent=t.toLocaleString('en-IN');return v;}
+
+function initMap(){
+  const map=L.map('map',{scrollWheelZoom:true,zoomControl:true});
+  window._kedMap=map;
+  window._districtBoundsMap={};
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'&copy; OpenStreetMap &copy; Carto',maxZoom:16}).addTo(map);
+  map.setView([10.5,76.2],7);
+
+  // Fallback: improved Voronoi polygons (always works offline)
+  const FALLBACK={"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":1,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[74.927066909635,12.501131503376062],[74.87133204154235,12.637117070723908],[74.86480080711586,12.68040792875763],[74.88209287799708,12.750820095607097],[74.91870494307688,12.796076994382311],[74.96978947978295,12.82398757133235],[75.04216049717412,12.828383569235301],[75.09624770408,12.806861388925714],[75.18866855483041,12.73430823482677],[74.927066909635,12.501131503376062]]]}},{"type":"Feature","properties":{"id":2,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[74.96872754765366,12.40087681975263],[74.927066909635,12.501131503376062],[75.18866855483041,12.73430823482677],[75.30550645507394,12.641433182195662],[74.96872754765366,12.40087681975263]]]}},{"type":"Feature","properties":{"id":3,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[75.06955364402707,12.316129223096993],[75.01317258968827,12.293921577593043],[74.96872754765366,12.40087681975263],[75.30550645507394,12.641433182195662],[75.37785748220628,12.58392097563575],[75.06955364402707,12.316129223096993]]]}},{"type":"Feature","properties":{"id":4,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[75.49176274941932,12.360429584080144],[75.44132849499587,12.343045049411456],[75.06955364402707,12.316129223096993],[75.37785748220628,12.58392097563575],[75.56824912083407,12.432577675035313],[75.49176274941932,12.360429584080144]]]}},{"type":"Feature","properties":{"id":5,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[75.06955364402707,12.316129223096993],[75.44132849499587,12.343045049411456],[75.1840992057583,12.136214374095719],[75.0890599510742,12.111301632997934],[75.01317258968827,12.293921577593043],[75.06955364402707,12.316129223096993]]]}},{"type":"Feature","properties":{"id":6,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[75.38659816610792,12.118184788178354],[75.1840992057583,12.136214374095719],[75.44132849499587,12.343045049411456],[75.49176274941932,12.360429584080144],[75.41291501632587,12.134102935581721],[75.38659816610792,12.118184788178354]]]}},{"type":"Feature","properties":{"id":7,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[75.1840992057583,12.136214374095719],[75.38659816610792,12.118184788178354],[75.35078107670559,11.998639437835514],[75.16760625535726,11.922283047104965],[75.0890599510742,12.111301632997934],[75.1840992057583,12.136214374095719]]]}},{"type":"Feature","properties":{"id":8,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[75.53093645055988,12.002710286833333],[75.50381114161881,11.957687387588377],[75.44553235044987,11.957493898905875],[75.35078107670559,11.998639437835514],[75.38659816610792,12.118184788178354],[75.41291501632587,12.134102935581721],[75.53093645055988,12.002710286833333]]]}},{"type":"Feature","properties":{"id":9,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[75.7158913531208,12.289877705465273],[75.7586492226525,12.187281035140346],[75.67951582720731,12.073928944734208],[75.53093645055988,12.002710286833333],[75.41291501632587,12.134102935581721],[75.49176274941932,12.360429584080144],[75.56824912083407,12.432577675035313],[75.64951177335229,12.367981571255267],[75.7158913531208,12.289877705465273]]]}},{"type":"Feature","properties":{"id":10,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[75.35078107670559,11.998639437835514],[75.44553235044987,11.957493898905875],[75.24086489999095,11.745989005781274],[75.16760625535726,11.922283047104965],[75.35078107670559,11.998639437835514]]]}},{"type":"Feature","properties":{"id":11,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[75.44553235044987,11.957493898905875],[75.50381114161881,11.957687387588377],[75.50594053975543,11.94555170263275],[75.35788639410627,11.710765608960289],[75.28264298762932,11.645451684276487],[75.24086489999095,11.745989005781274],[75.44553235044987,11.957493898905875]]]}},{"type":"Feature","properties":{"id":12,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[75.56644775855285,11.82123338667686],[75.35788639410627,11.710765608960289],[75.50594053975543,11.94555170263275],[75.57133137633431,11.841145457115697],[75.56644775855285,11.82123338667686]]]}},{"type":"Feature","properties":{"id":13,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[75.35788639410627,11.710765608960289],[75.56644775855285,11.82123338667686],[75.61626992026267,11.720387415572233],[75.32047858788717,11.554401803286806],[75.28264298762932,11.645451684276487],[75.35788639410627,11.710765608960289]]]}},{"type":"Feature","properties":{"id":14,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[75.63924616644039,11.713394644996406],[75.61626992026267,11.720387415572233],[75.56644775855285,11.82123338667686],[75.57133137633431,11.841145457115697],[75.69975001161912,11.878987030915258],[75.76102141896524,11.817532587251437],[75.63924616644039,11.713394644996406]]]}},{"type":"Feature","properties":{"id":15,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[75.69975001161912,11.878987030915258],[75.57133137633431,11.841145457115697],[75.50381114161881,11.957687387588377],[75.53093645055988,12.002710286833333],[75.67951582720731,12.073928944734208],[75.69975001161912,11.878987030915258]]]}},{"type":"Feature","properties":{"id":16,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[75.94492042456793,11.962153752837304],[75.8264697564559,11.802018055976216],[75.76102141896524,11.817532587251437],[75.69975001161912,11.878987030915258],[75.67951582720731,12.073928944734208],[75.7586492226525,12.187281035140346],[75.82682702044792,12.13825795196364],[75.94492042456793,11.962153752837304]]]}},{"type":"Feature","properties":{"id":17,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.0534666911392,11.881080098021691],[76.06714483798979,11.732428513570742],[75.92442568625047,11.636464915422293],[75.87305629026939,11.677008260113237],[75.8264697564559,11.802018055976216],[75.94492042456793,11.962153752837304],[75.97899053271614,11.95462548241827],[76.0172074697504,11.933398858192877],[76.0534666911392,11.881080098021691]]]}},{"type":"Feature","properties":{"id":18,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.16874971386883,11.653734245444928],[76.13760184734754,11.708277930990077],[76.18657309584077,11.748140346890649],[76.3354011908501,11.707780185532162],[76.32990671990189,11.69816131197295],[76.16874971386883,11.653734245444928]]]}},{"type":"Feature","properties":{"id":19,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.1245301885297,11.491393745607612],[75.96761297702048,11.535160278660635],[75.93212591264603,11.59406545773799],[75.92442568625047,11.636464915422293],[76.06714483798979,11.732428513570742],[76.13760184734754,11.708277930990077],[76.16874971386883,11.653734245444928],[76.17594329515815,11.61712596084204],[76.1245301885297,11.491393745607612]]]}},{"type":"Feature","properties":{"id":20,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[75.37230209790647,11.429690568693779],[75.32047858788717,11.554401803286806],[75.61626992026267,11.720387415572233],[75.63924616644039,11.713394644996406],[75.62603506001264,11.550835470625398],[75.37230209790647,11.429690568693779]]]}},{"type":"Feature","properties":{"id":21,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[75.62603506001264,11.550835470625398],[75.63972243762949,11.712476882481495],[75.74864126787077,11.631010345965866],[75.69632211819777,11.55303194119368],[75.62603506001264,11.550835470625398]]]}},{"type":"Feature","properties":{"id":22,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[75.8264697564559,11.802018055976216],[75.87305629026939,11.677008260113237],[75.74864126787077,11.631010345965866],[75.63924616644039,11.713394644996406],[75.76102141896524,11.817532587251437],[75.8264697564559,11.802018055976216]]]}},{"type":"Feature","properties":{"id":23,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[75.62603506001264,11.550835470625398],[75.69632211819777,11.55303194119368],[75.74983490703906,11.48885358499117],[75.75277259400622,11.426748399952963],[75.67920800099454,11.331499477871706],[75.57831920647968,11.255668031014132],[75.47194625949183,11.189900820630207],[75.37230209790647,11.429690568693779],[75.62603506001264,11.550835470625398]]]}},{"type":"Feature","properties":{"id":24,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[75.74864126787077,11.631010345965866],[75.87305629026939,11.677008260113237],[75.92442568625047,11.636464915422293],[75.93212591264603,11.59406545773799],[75.74983490703906,11.48885358499117],[75.69632211819777,11.55303194119368],[75.74864126787077,11.631010345965866]]]}},{"type":"Feature","properties":{"id":25,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[75.75277259400622,11.426748399952963],[75.74983490703906,11.48885358499117],[75.93212591264603,11.59406545773799],[75.95927877935398,11.541642002692678],[75.85502288303277,11.418727041072428],[75.75277259400622,11.426748399952963]]]}},{"type":"Feature","properties":{"id":26,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[75.85668698105042,11.324371807989943],[75.67920800099454,11.331499477871706],[75.75277259400622,11.426748399952963],[75.85502288303277,11.418727041072428],[75.88054052057431,11.345708427276296],[75.85668698105042,11.324371807989943]]]}},{"type":"Feature","properties":{"id":27,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[75.85047450030586,11.268959336061448],[75.57831920647968,11.255668031014132],[75.67920800099454,11.331499477871706],[75.85668698105042,11.324371807989943],[75.85047450030586,11.268959336061448]]]}},{"type":"Feature","properties":{"id":28,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[75.52884115901604,11.078918287464292],[75.49624798717795,11.131419670639588],[75.47194625949183,11.189900820630207],[75.57831920647968,11.255668031014132],[75.85047450030586,11.268959336061448],[75.86728428370957,11.231958209327342],[75.52884115901604,11.078918287464292]]]}},{"type":"Feature","properties":{"id":29,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[75.67245830014568,11.00418387862301],[75.58017234352761,10.973546772591936],[75.52884115901604,11.078918287464292],[75.86728428370957,11.231958209327342],[75.89730866207408,11.217071121721602],[75.89765911686219,11.169628304782767],[75.67245830014568,11.00418387862301]]]}},{"type":"Feature","properties":{"id":30,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[75.89730866207408,11.217071121721602],[75.86728428370957,11.231958209327342],[75.85047450030586,11.268959336061448],[75.85668698105042,11.324371807989943],[75.88054052057431,11.345708427276296],[75.97816016307034,11.32226337506177],[75.99889878534982,11.299399417592715],[75.99537912805393,11.279601345303284],[75.89730866207408,11.217071121721602]]]}},{"type":"Feature","properties":{"id":31,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[75.85502288303277,11.418727041072428],[75.95927877935398,11.541642002692678],[75.96761297702048,11.535160278660635],[75.97816016307034,11.32226337506177],[75.88054052057431,11.345708427276296],[75.85502288303277,11.418727041072428]]]}},{"type":"Feature","properties":{"id":32,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.13789092632247,11.355376364361067],[75.99889878534982,11.299399417592715],[75.97816016307034,11.32226337506177],[75.96761297702048,11.535160278660635],[76.1245301885297,11.491393745607612],[76.15325497215369,11.450993477926511],[76.13789092632247,11.355376364361067]]]}},{"type":"Feature","properties":{"id":33,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[75.89765911686219,11.169628304782767],[75.89730866207408,11.217071121721602],[75.99537912805393,11.279601345303284],[76.0392220668129,11.174585657532646],[76.00919617404315,11.126870366307061],[75.96574528308736,11.117584881791565],[75.89765911686219,11.169628304782767]]]}},{"type":"Feature","properties":{"id":34,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.13403222874419,11.169841855128848],[76.0392220668129,11.174585657532646],[75.99537912805393,11.279601345303284],[75.99889878534982,11.299399417592715],[76.13789092632247,11.355376364361067],[76.20134683151053,11.271790324999003],[76.17993831373418,11.204650523176813],[76.13403222874419,11.169841855128848]]]}},{"type":"Feature","properties":{"id":35,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.22159958036039,11.27358684982811],[76.20134683151053,11.271790324999003],[76.13789092632247,11.355376364361067],[76.15325497215369,11.450993477926511],[76.1789704329579,11.453685760385234],[76.30107516881047,11.34885999658722],[76.22159958036039,11.27358684982811]]]}},{"type":"Feature","properties":{"id":36,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.27476058170356,11.106330200526083],[76.17993831373418,11.204650523176813],[76.20134683151053,11.271790324999003],[76.22159958036039,11.27358684982811],[76.28111824000973,11.25083568982563],[76.32331350974101,11.135682096568871],[76.27476058170356,11.106330200526083]]]}},{"type":"Feature","properties":{"id":37,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.26135425454575,11.059563221297301],[76.21028768846297,11.03561398240324],[76.14454298859168,11.063555479848535],[76.13403222874419,11.169841855128848],[76.17993831373418,11.204650523176813],[76.27476058170356,11.106330200526083],[76.26135425454575,11.059563221297301]]]}},{"type":"Feature","properties":{"id":38,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.34710305597419,10.978464571790129],[76.30487304603098,10.913902401200257],[76.26235141641482,10.894331906460792],[76.19128864562471,10.925145320951925],[76.21028768846297,11.03561398240324],[76.26135425454575,11.059563221297301],[76.34710305597419,10.978464571790129]]]}},{"type":"Feature","properties":{"id":39,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.19128864562471,10.925145320951925],[76.13495761988996,10.904855822488198],[76.06680743123835,11.02007376733085],[76.14454298859168,11.063555479848535],[76.21028768846297,11.03561398240324],[76.19128864562471,10.925145320951925]]]}},{"type":"Feature","properties":{"id":40,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.06680743123835,11.02007376733085],[76.05835221474865,11.02191825520399],[76.00919617404315,11.126870366307061],[76.0392220668129,11.174585657532646],[76.13403222874419,11.169841855128848],[76.14454298859168,11.063555479848535],[76.06680743123835,11.02007376733085]]]}},{"type":"Feature","properties":{"id":41,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[75.93334486796304,11.074795762135313],[75.96574528308736,11.117584881791565],[76.00919617404315,11.126870366307061],[76.05835221474865,11.02191825520399],[75.98872655435915,10.977628077705555],[75.97073691344319,10.99055940689004],[75.93334486796304,11.074795762135313]]]}},{"type":"Feature","properties":{"id":42,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[75.69481079449453,11.014830577926329],[75.89765911686219,11.169628304782767],[75.96574528308736,11.117584881791565],[75.93334486796304,11.074795762135313],[75.69481079449453,11.014830577926329]]]}},{"type":"Feature","properties":{"id":43,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[75.67245830014568,11.00418387862301],[75.93334486796304,11.074795762135313],[75.97073691344319,10.99055940689004],[75.67245830014568,11.00418387862301]]]}},{"type":"Feature","properties":{"id":44,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[75.81112073381878,10.831377667158923],[75.7158913531208,10.789877705465273],[75.58288164086767,10.94638024360747],[75.58017234352761,10.973546772591936],[75.67245830014568,11.00418387862301],[75.97073691344319,10.99055940689004],[75.98872655435915,10.977628077705555],[75.98730390102541,10.969363139290486],[75.81112073381878,10.831377667158923]]]}},{"type":"Feature","properties":{"id":45,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.02782453477982,10.871846449266116],[75.81112073381878,10.831377667158923],[75.98730390102541,10.969363139290486],[76.02782453477982,10.871846449266116]]]}},{"type":"Feature","properties":{"id":46,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.05647884167108,10.85454347165423],[76.02782453477982,10.871846449266116],[75.98730390102541,10.969363139290486],[75.98872655435915,10.977628077705555],[76.05835221474865,11.02191825520399],[76.06680743123835,11.02007376733085],[76.13495761988996,10.904855822488198],[76.11452995690125,10.87350956311316],[76.05647884167108,10.85454347165423]]]}},{"type":"Feature","properties":{"id":47,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[75.7564221970485,10.695763711938248],[75.7158913531208,10.789877705465273],[75.81112073381878,10.831377667158923],[76.02782453477982,10.871846449266116],[76.05647884167108,10.85454347165423],[76.04090158134906,10.802293860056373],[75.7564221970485,10.695763711938248]]]}},{"type":"Feature","properties":{"id":48,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.05859560211856,10.684128817085966],[75.82682702044792,10.63825795196364],[75.7586492226525,10.687281035140346],[75.7564221970485,10.695763711938248],[76.04090158134906,10.802293860056373],[76.07342597945598,10.711676750879867],[76.05859560211856,10.684128817085966]]]}},{"type":"Feature","properties":{"id":49,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.07342597945598,10.711676750879867],[76.04090158134906,10.802293860056373],[76.05647884167108,10.85454347165423],[76.11452995690125,10.87350956311316],[76.1870407012195,10.753067987804881],[76.07342597945598,10.711676750879867]]]}},{"type":"Feature","properties":{"id":50,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.25829964427538,10.76542157707726],[76.22297444558232,10.740385489794479],[76.1870407012195,10.753067987804881],[76.11452995690125,10.87350956311316],[76.13495761988996,10.904855822488198],[76.19128864562471,10.925145320951925],[76.26235141641482,10.894331906460792],[76.25829964427538,10.76542157707726]]]}},{"type":"Feature","properties":{"id":51,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.36828572912364,10.758453157593083],[76.25829964427538,10.76542157707726],[76.26235141641482,10.894331906460792],[76.30487304603098,10.913902401200257],[76.36224539014778,10.85492803700342],[76.38448967501505,10.794839579180136],[76.36828572912364,10.758453157593083]]]}},{"type":"Feature","properties":{"id":52,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.36224539014778,10.85492803700342],[76.41776383463832,10.905837403083455],[76.46508754617403,10.842779158016839],[76.38448967501505,10.794839579180136],[76.36224539014778,10.85492803700342]]]}},{"type":"Feature","properties":{"id":53,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.5184776570271,10.818156680593592],[76.47430625080095,10.842947152634185],[76.50133758806624,10.941121405009769],[76.56028412070908,10.914941958001483],[76.56857416128653,10.850714264983957],[76.5184776570271,10.818156680593592]]]}},{"type":"Feature","properties":{"id":54,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.6106826946848,11.015237349408705],[76.51938281179302,11.011489966155683],[76.55412794610277,11.116732474427224],[76.57337336375,11.126330058684717],[76.6106826946848,11.015237349408705]]]}},{"type":"Feature","properties":{"id":55,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.64181413717596,10.83949365586441],[76.71453649720378,10.913314540968189],[76.73762527684781,10.883590775173817],[76.6892441400691,10.748123592193542],[76.64341666478488,10.817115502468274],[76.64181413717596,10.83949365586441]]]}},{"type":"Feature","properties":{"id":56,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.64341666478488,10.817115502468274],[76.70185913978494,10.724879390681002],[76.66131272466995,10.686694112189175],[76.58773275089965,10.744711485754246],[76.64341666478488,10.817115502468274]]]}},{"type":"Feature","properties":{"id":57,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.43189971507297,10.565128624804323],[76.39441572447622,10.60864332678697],[76.40538708784324,10.698588738174333],[76.47374519277697,10.719132210834557],[76.52601239035087,10.64073141447368],[76.4952301664534,10.606847559651182],[76.43189971507297,10.565128624804323]]]}},{"type":"Feature","properties":{"id":58,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.70193594194579,10.725177289971548],[76.8035434245514,10.806977744322396],[76.86092066046213,10.79067223603816],[76.87931943317001,10.675267309551506],[76.82411647854241,10.634103799502476],[76.70193594194579,10.725177289971548]]]}},{"type":"Feature","properties":{"id":59,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.69914944598338,10.592802354570637],[76.77147661396509,10.581221267250307],[76.71578581298745,10.471419546173841],[76.66178591714588,10.492208238469663],[76.69914944598338,10.592802354570637]]]}},{"type":"Feature","properties":{"id":60,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.52601239035087,10.64073141447368],[76.56050740326617,10.657379007663238],[76.63219448955574,10.626739230944814],[76.60490284646406,10.58603376636448],[76.4952301664534,10.606847559651182],[76.52601239035087,10.64073141447368]]]}},{"type":"Feature","properties":{"id":61,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.40538708784324,10.698588738174333],[76.39441572447622,10.60864332678697],[76.2973679684815,10.600128319349942],[76.22543621566348,10.69724106569179],[76.22297444558232,10.740385489794479],[76.25829964427538,10.76542157707726],[76.36828572912364,10.758453157593083],[76.40538708784324,10.698588738174333]]]}},{"type":"Feature","properties":{"id":62,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.22297444558232,10.740385489794479],[76.22543621566348,10.69724106569179],[76.14384364375127,10.60736174819476],[76.10195335809777,10.618725779545473],[76.05859560211856,10.684128817085966],[76.07342597945598,10.711676750879867],[76.1870407012195,10.753067987804881],[76.22297444558232,10.740385489794479]]]}},{"type":"Feature","properties":{"id":63,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[75.97899053271614,10.45462548241827],[75.94492042456793,10.462153752837304],[75.82682702044792,10.63825795196364],[76.05859560211856,10.684128817085966],[76.10195335809777,10.618725779545473],[75.97899053271614,10.45462548241827]]]}},{"type":"Feature","properties":{"id":64,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.14384364375127,10.60736174819476],[76.16713265220824,10.567879895932213],[76.15719007521623,10.501773595336592],[76.0172074697504,10.433398858192877],[75.97899053271614,10.45462548241827],[76.10195335809777,10.618725779545473],[76.14384364375127,10.60736174819476]]]}},{"type":"Feature","properties":{"id":65,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.22543621566348,10.69724106569179],[76.2973679684815,10.600128319349942],[76.27941894686865,10.578035726404675],[76.16713265220824,10.567879895932213],[76.14384364375127,10.60736174819476],[76.22543621566348,10.69724106569179]]]}},{"type":"Feature","properties":{"id":66,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.4453153845147,10.519135029101477],[76.44267221349871,10.50212965535498],[76.26173541924328,10.444786609790947],[76.27941894686865,10.578035726404675],[76.2973679684815,10.600128319349942],[76.39441572447622,10.60864332678697],[76.43189971507297,10.565128624804323],[76.4453153845147,10.519135029101477]]]}},{"type":"Feature","properties":{"id":67,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.27941894686865,10.578035726404675],[76.26171421288464,10.444760429335654],[76.15719007521623,10.501773595336592],[76.16713265220824,10.567879895932213],[76.27941894686865,10.578035726404675]]]}},{"type":"Feature","properties":{"id":68,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.26171421288464,10.444760429335654],[76.26021569907061,10.419892850956215],[76.17792246117664,10.371442806919712],[76.0534666911392,10.381080098021691],[76.0172074697504,10.433398858192877],[76.15719007521623,10.501773595336592],[76.26171421288464,10.444760429335654]]]}},{"type":"Feature","properties":{"id":69,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.13760184734754,10.208277930990077],[76.06714483798979,10.232428513570742],[76.0534666911392,10.381080098021691],[76.17792246117664,10.371442806919712],[76.2012604791748,10.275345085750804],[76.18657309584077,10.248140346890649],[76.13760184734754,10.208277930990077]]]}},{"type":"Feature","properties":{"id":70,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.2012604791748,10.275345085750804],[76.17792246117664,10.371442806919712],[76.26021569907061,10.419892850956215],[76.32248981022083,10.330190907244745],[76.2012604791748,10.275345085750804]]]}},{"type":"Feature","properties":{"id":71,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.32248981022083,10.330190907244745],[76.26021569907061,10.419892850956215],[76.26171421288464,10.444760429335654],[76.44267221349871,10.50212965535498],[76.4754265459815,10.394195313405154],[76.4509455809608,10.344860695028522],[76.37468534937071,10.298682624465252],[76.32248981022083,10.330190907244745]]]}},{"type":"Feature","properties":{"id":72,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.4754265459815,10.394195313405154],[76.50682476962538,10.396044487634182],[76.57591255478562,10.378224683281507],[76.66378256151143,10.275265887521975],[76.67007776068608,10.244546792429244],[76.66727089227918,10.183468166366488],[76.58703126614309,10.203488662475102],[76.4509455809608,10.344860695028522],[76.4754265459815,10.394195313405154]]]}},{"type":"Feature","properties":{"id":73,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.3354011908501,10.207780185532162],[76.18657309584077,10.248140346890649],[76.2012604791748,10.275345085750804],[76.32248981022083,10.330190907244745],[76.37468534937071,10.298682624465252],[76.36566118093582,10.23586052882243],[76.3354011908501,10.207780185532162]]]}},{"type":"Feature","properties":{"id":74,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.44593697515538,10.09511836965368],[76.4518026904698,10.152494979313722],[76.58703126614309,10.203488662475102],[76.67004623510137,10.179752926516374],[76.67886486186505,10.127449914423492],[76.55198268257843,10.019653825665143],[76.44593697515538,10.09511836965368]]]}},{"type":"Feature","properties":{"id":75,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.37468534937071,10.298682624465252],[76.4509455809608,10.344860695028522],[76.58703126614309,10.203488662475102],[76.4518026904698,10.152494979313722],[76.36566118093582,10.23586052882243],[76.37468534937071,10.298682624465252]]]}},{"type":"Feature","properties":{"id":76,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.32395645350167,10.165502772187267],[76.3354011908501,10.207780185532162],[76.36566118093582,10.23586052882243],[76.4518026904698,10.152494979313722],[76.44593697515538,10.09511836965368],[76.37623974549963,10.046184830806192],[76.32395645350167,10.165502772187267]]]}},{"type":"Feature","properties":{"id":77,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.3750747771281,10.044109260542202],[76.33424811994752,10.044034759342969],[76.28390118701624,10.06333340231663],[76.2638167844027,10.097649798835116],[76.32395645350167,10.165502772187267],[76.3750747771281,10.044109260542202]]]}},{"type":"Feature","properties":{"id":78,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.17594329515815,10.11712596084204],[76.16874971386883,10.153734245444928],[76.32990671990189,10.19816131197295],[76.32395645350167,10.165502772187267],[76.2638167844027,10.097649798835116],[76.17594329515815,10.11712596084204]]]}},{"type":"Feature","properties":{"id":79,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.28390118701624,10.06333340231663],[76.19767505444656,9.957971523748878],[76.15325497215369,9.950993477926511],[76.1245301885297,9.991393745607612],[76.17594329515815,10.11712596084204],[76.2638167844027,10.097649798835116],[76.28390118701624,10.06333340231663]]]}},{"type":"Feature","properties":{"id":80,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.33116289974335,9.863886266889368],[76.30107516881047,9.84885999658722],[76.1789704329579,9.953685760385234],[76.25840069536719,9.954089300454031],[76.29292457907435,9.94025207251529],[76.33116289974335,9.863886266889368]]]}},{"type":"Feature","properties":{"id":81,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.39650686713962,9.849619500674514],[76.33116289974335,9.863886266889368],[76.29292457907435,9.94025207251529],[76.38937869218,9.982940033751955],[76.41749366546608,9.9515666071517],[76.39650686713962,9.849619500674514]]]}},{"type":"Feature","properties":{"id":82,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.33424811994752,10.044034759342969],[76.25840069536719,9.954089300454031],[76.19767505444656,9.957971523748878],[76.28390118701624,10.06333340231663],[76.33424811994752,10.044034759342969]]]}},{"type":"Feature","properties":{"id":83,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.29292457907435,9.94025207251529],[76.25840069536719,9.954089300454031],[76.33424811994752,10.044034759342969],[76.3750747771281,10.044109260542202],[76.38937869218,9.982940033751955],[76.29292457907435,9.94025207251529]]]}},{"type":"Feature","properties":{"id":84,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.38937869218,9.982940033751955],[76.3750747771281,10.044109260542202],[76.44593697515538,10.09511836965368],[76.55198268257843,10.019653825665143],[76.53901873933867,9.972016478680981],[76.41749366546608,9.9515666071517],[76.38937869218,9.982940033751955]]]}},{"type":"Feature","properties":{"id":85,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.53901873933867,9.972016478680981],[76.58176565740686,9.876849559458721],[76.49872930133763,9.818247037978185],[76.39964777225286,9.844371192987984],[76.41749366546608,9.9515666071517],[76.53901873933867,9.972016478680981]]]}},{"type":"Feature","properties":{"id":86,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.67886486186505,10.127449914423492],[76.75660566896069,10.048753277732418],[76.66413848283891,9.84700668983033],[76.58176565740686,9.876849559458721],[76.53901873933867,9.972016478680981],[76.55198268257843,10.019653825665143],[76.67886486186505,10.127449914423492]]]}},{"type":"Feature","properties":{"id":87,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.88111175719905,10.144690972284783],[76.84748488335269,10.204248428428166],[76.92297297928174,10.278644754374787],[76.9419278329973,10.277433229732887],[76.96399643132635,10.182203884215971],[76.88111175719905,10.144690972284783]]]}},{"type":"Feature","properties":{"id":88,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[77.14839538940974,10.219599202957882],[77.05162927414871,10.05992013350235],[76.9948768149224,10.105199235968524],[76.98652114978128,10.16078430359781],[77.14839538940974,10.219599202957882]]]}},{"type":"Feature","properties":{"id":89,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[77.12791605190682,9.687993372348075],[77.10360540635334,9.802521770718508],[77.14546540279434,9.913344337567375],[77.30804611143887,9.909662196082394],[77.31819973577016,9.855681547294976],[77.31852277694679,9.683575148112375],[77.12791605190682,9.687993372348075]]]}},{"type":"Feature","properties":{"id":90,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.8681729650789,9.77492559899729],[76.6740890530706,9.83205594027563],[76.66413848283891,9.84700668983033],[76.75660566896069,10.048753277732418],[76.77365045963018,10.044734963375285],[76.85905551516929,9.978767615052032],[76.87415799262611,9.943734223836076],[76.89253910647,9.847150684769485],[76.8681729650789,9.77492559899729]]]}},{"type":"Feature","properties":{"id":91,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[77.04842160338086,9.863837107354609],[77.10360540635334,9.802521770718508],[77.12791605190682,9.687993372348075],[77.02344837545053,9.641073477099637],[76.88402591439772,9.731411888153605],[76.8681729650789,9.77492559899729],[76.89253910647,9.847150684769485],[77.04842160338086,9.863837107354609]]]}},{"type":"Feature","properties":{"id":92,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[77.00462136533075,9.426155882221295],[76.99431851652953,9.4542744238925],[77.02344837545053,9.641073477099637],[77.12791605190682,9.687993372348075],[77.31852277694679,9.683575148112375],[77.31943591548517,9.197083031441029],[77.00462136533075,9.426155882221295]]]}},{"type":"Feature","properties":{"id":93,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.6229952562864,9.690365701643598],[76.6740890530706,9.83205594027563],[76.8681729650789,9.77492559899729],[76.88402591439772,9.731411888153605],[76.77053896716568,9.624646087558183],[76.72148779812453,9.61762391595632],[76.6229952562864,9.690365701643598]]]}},{"type":"Feature","properties":{"id":94,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.50383446523496,9.720320712311294],[76.49872930133763,9.818247037978185],[76.58176565740686,9.876849559458721],[76.66413848283891,9.84700668983033],[76.6740890530706,9.83205594027563],[76.6229952562864,9.690365701643598],[76.59627232793447,9.6805886485194],[76.50383446523496,9.720320712311294]]]}},{"type":"Feature","properties":{"id":95,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.4170068482114,9.667186303577175],[76.3703040851272,9.760591829745596],[76.39964777225286,9.844371192987984],[76.49872930133763,9.818247037978185],[76.50383446523496,9.720320712311294],[76.4170068482114,9.667186303577175]]]}},{"type":"Feature","properties":{"id":96,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.43617034789956,9.587454620066902],[76.40955196154286,9.645951524832226],[76.4170068482114,9.667186303577175],[76.50383446523496,9.720320712311294],[76.59627232793447,9.6805886485194],[76.57337336375,9.626330058684717],[76.43617034789956,9.587454620066902]]]}},{"type":"Feature","properties":{"id":97,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.51938281179302,9.511489966155683],[76.47016508251747,9.50057665721027],[76.43844837382552,9.51431799823336],[76.43617034789956,9.587454620066902],[76.55412794610277,9.616732474427224],[76.51938281179302,9.511489966155683]]]}},{"type":"Feature","properties":{"id":98,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.59627232793447,9.6805886485194],[76.6229952562864,9.690365701643598],[76.72148779812453,9.61762391595632],[76.64832869411235,9.494054451223345],[76.6106826946848,9.515237349408705],[76.57337336375,9.626330058684717],[76.59627232793447,9.6805886485194]]]}},{"type":"Feature","properties":{"id":99,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.6106826946848,9.515237349408705],[76.64971035679763,9.490023371236235],[76.56028412070908,9.414941958001483],[76.50133758806624,9.441121405009769],[76.47016508251747,9.50057665721027],[76.51938281179302,9.511489966155683],[76.6106826946848,9.515237349408705]]]}},{"type":"Feature","properties":{"id":100,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.64832869411235,9.494054451223345],[76.72148779812453,9.61762391595632],[76.77053896716568,9.624646087558183],[76.82310467422097,9.484470868744097],[76.71458523639355,9.415843311488757],[76.64832869411235,9.494054451223345]]]}},{"type":"Feature","properties":{"id":101,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.88402591439772,9.731411888153605],[77.02344837545053,9.641073477099637],[76.99431851652953,9.4542744238925],[76.82310467422097,9.484470868744097],[76.77053896716568,9.624646087558183],[76.88402591439772,9.731411888153605]]]}},{"type":"Feature","properties":{"id":102,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.39650686713962,9.849619500674514],[76.3703040851272,9.760591829745596],[76.28111824000973,9.75083568982563],[76.22159958036039,9.77358684982811],[76.30107516881047,9.84885999658722],[76.33116289974335,9.863886266889368],[76.39650686713962,9.849619500674514]]]}},{"type":"Feature","properties":{"id":103,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.28111824000973,9.75083568982563],[76.3703040851272,9.760591829745596],[76.4170068482114,9.667186303577175],[76.40955196154286,9.645951524832226],[76.32331350974101,9.635682096568871],[76.28111824000973,9.75083568982563]]]}},{"type":"Feature","properties":{"id":104,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.34710305597419,9.478464571790129],[76.26135425454575,9.559563221297301],[76.27476058170356,9.606330200526083],[76.32331350974101,9.635682096568871],[76.40955196154286,9.645951524832226],[76.43617034789956,9.587454620066902],[76.43844837382552,9.51431799823336],[76.40364325651682,9.48990410073712],[76.34710305597419,9.478464571790129]]]}},{"type":"Feature","properties":{"id":105,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.36224539014778,9.35492803700342],[76.30487304603098,9.413902401200257],[76.34710305597419,9.478464571790129],[76.40364325651682,9.48990410073712],[76.41776383463832,9.405837403083455],[76.36224539014778,9.35492803700342]]]}},{"type":"Feature","properties":{"id":106,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.40364325651682,9.48990410073712],[76.43844837382552,9.51431799823336],[76.47016508251747,9.50057665721027],[76.50133758806624,9.441121405009769],[76.47430625080095,9.342947152634185],[76.46508754617403,9.342779158016839],[76.41776383463832,9.405837403083455],[76.40364325651682,9.48990410073712]]]}},{"type":"Feature","properties":{"id":107,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.5269586447019,9.251256964152692],[76.47374519277697,9.219132210834557],[76.40538708784324,9.198588738174333],[76.36828572912364,9.258453157593083],[76.38448967501505,9.294839579180136],[76.47430625080095,9.342947152634185],[76.5184776570271,9.318156680593592],[76.5269586447019,9.251256964152692]]]}},{"type":"Feature","properties":{"id":108,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.5269586447019,9.251256964152692],[76.53943596595352,9.243759578167138],[76.56050740326617,9.157379007663238],[76.52601239035087,9.14073141447368],[76.47374519277697,9.219132210834557],[76.5269586447019,9.251256964152692]]]}},{"type":"Feature","properties":{"id":109,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.64554235542246,9.132023498797887],[76.63219448955574,9.126739230944814],[76.56050740326617,9.157379007663238],[76.53943596595352,9.243759578167138],[76.58773275089965,9.244711485754246],[76.66131272466995,9.186694112189175],[76.64554235542246,9.132023498797887]]]}},{"type":"Feature","properties":{"id":110,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.64181413717596,9.33949365586441],[76.64341666478488,9.317115502468274],[76.58773275089965,9.244711485754246],[76.53943596595352,9.243759578167138],[76.5269586447019,9.251256964152692],[76.5184776570271,9.318156680593592],[76.56857416128653,9.350714264983957],[76.64181413717596,9.33949365586441]]]}},{"type":"Feature","properties":{"id":111,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.64971035679763,9.490023371236235],[76.71453649720378,9.413314540968189],[76.64181413717596,9.33949365586441],[76.56857416128653,9.350714264983957],[76.56028412070908,9.414941958001483],[76.64971035679763,9.490023371236235]]]}},{"type":"Feature","properties":{"id":112,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.71453649720378,9.413314540968189],[76.82310467422097,9.484470868744097],[76.99431851652953,9.4542744238925],[77.00462136533075,9.426155882221295],[76.86092066046213,9.29067223603816],[76.8035434245514,9.306977744322396],[76.71453649720378,9.413314540968189]]]}},{"type":"Feature","properties":{"id":113,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.6892441400691,9.248123592193542],[76.73762527684781,9.383590775173817],[76.8035434245514,9.306977744322396],[76.70193594194579,9.225177289971548],[76.6892441400691,9.248123592193542]]]}},{"type":"Feature","properties":{"id":114,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[77.03272976147518,9.115616891886136],[76.87931943317001,9.175267309551506],[76.86092066046213,9.29067223603816],[77.00462136533075,9.426155882221295],[77.31943591548517,9.197083031441029],[77.03272976147518,9.115616891886136]]]}},{"type":"Feature","properties":{"id":115,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.82411647854241,9.134103799502476],[76.79721372025344,9.086734072084175],[76.77147661396509,9.081221267250307],[76.69914944598338,9.092802354570637],[76.64554235542246,9.132023498797887],[76.66131272466995,9.186694112189175],[76.70185913978494,9.224879390681002],[76.82411647854241,9.134103799502476]]]}},{"type":"Feature","properties":{"id":116,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.60490284646406,9.08603376636448],[76.58699134101286,9.037197302439887],[76.4453153845147,9.019135029101477],[76.43189971507297,9.065128624804323],[76.4952301664534,9.106847559651182],[76.60490284646406,9.08603376636448]]]}},{"type":"Feature","properties":{"id":117,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.58699134101286,9.037197302439887],[76.61816041080867,8.993283985405856],[76.50682476962538,8.896044487634182],[76.4754265459815,8.894195313405154],[76.44267221349871,9.00212965535498],[76.4453153845147,9.019135029101477],[76.58699134101286,9.037197302439887]]]}},{"type":"Feature","properties":{"id":118,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.63219448955574,9.126739230944814],[76.64554235542246,9.132023498797887],[76.69914944598338,9.092802354570637],[76.66178591714588,8.992208238469663],[76.63549699704352,8.985666633933477],[76.61816041080867,8.993283985405856],[76.58699134101286,9.037197302439887],[76.60490284646406,9.08603376636448],[76.63219448955574,9.126739230944814]]]}},{"type":"Feature","properties":{"id":119,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.71578581298745,8.971419546173841],[76.77147661396509,9.081221267250307],[76.79721372025344,9.086734072084175],[76.86167767263296,8.964081419326675],[76.81078389963159,8.911012698761144],[76.74683593687735,8.923264617193729],[76.71578581298745,8.971419546173841]]]}},{"type":"Feature","properties":{"id":120,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.82411647854241,9.134103799502476],[76.87931943317001,9.175267309551506],[77.03272976147518,9.115616891886136],[76.9362216628718,8.966054084717216],[76.86167767263296,8.964081419326675],[76.79721372025344,9.086734072084175],[76.82411647854241,9.134103799502476]]]}},{"type":"Feature","properties":{"id":121,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[77.32011944969591,8.832917035776308],[77.01644521485714,8.847825637902442],[76.9362216628718,8.966054084717216],[77.03272976147518,9.115616891886136],[77.31943954033736,9.195151821729128],[77.32011944969591,8.832917035776308]]]}},{"type":"Feature","properties":{"id":122,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.9362216628718,8.966054084717216],[77.01644521485714,8.847825637902442],[76.9419278329973,8.777433229732887],[76.92297297928174,8.778644754374787],[76.84882703078296,8.813829614333386],[76.81351403271437,8.88404431099223],[76.81078389963159,8.911012698761144],[76.86167767263296,8.964081419326675],[76.9362216628718,8.966054084717216]]]}},{"type":"Feature","properties":{"id":123,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.66178591714588,8.992208238469663],[76.71578581298745,8.971419546173841],[76.74683593687735,8.923264617193729],[76.69273837710332,8.886053355873566],[76.63767177073495,8.917795571646408],[76.63549699704352,8.985666633933477],[76.66178591714588,8.992208238469663]]]}},{"type":"Feature","properties":{"id":124,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.61816041080867,8.993283985405856],[76.63549699704352,8.985666633933477],[76.63767177073495,8.917795571646408],[76.57591255478562,8.878224683281507],[76.50682476962538,8.896044487634182],[76.61816041080867,8.993283985405856]]]}},{"type":"Feature","properties":{"id":125,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.66378256151143,8.775265887521975],[76.57591255478562,8.878224683281507],[76.63767177073495,8.917795571646408],[76.69273837710332,8.886053355873566],[76.66378256151143,8.775265887521975]]]}},{"type":"Feature","properties":{"id":126,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.81078389963159,8.911012698761144],[76.81351403271437,8.88404431099223],[76.67007776068608,8.744546792429244],[76.66378256151143,8.775265887521975],[76.69273837710332,8.886053355873566],[76.74683593687735,8.923264617193729],[76.81078389963159,8.911012698761144]]]}},{"type":"Feature","properties":{"id":127,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[76.67004623510137,8.679752926516374],[76.67007776068608,8.744546792429244],[76.81351403271437,8.88404431099223],[76.84882703078296,8.813829614333386],[76.73807393894263,8.707952444775362],[76.67004623510137,8.679752926516374]]]}},{"type":"Feature","properties":{"id":128,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.73807393894263,8.707952444775362],[76.84882703078296,8.813829614333386],[76.92297297928174,8.778644754374787],[76.84748488335269,8.704248428428166],[76.73807393894263,8.707952444775362]]]}},{"type":"Feature","properties":{"id":129,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.67886486186505,8.627449914423492],[76.67004623510137,8.679752926516374],[76.73807393894263,8.707952444775362],[76.84748488335269,8.704248428428166],[76.88111175719905,8.644690972284783],[76.86503300898481,8.617385642477155],[76.77365045963018,8.544734963375285],[76.75660566896069,8.548753277732418],[76.67886486186505,8.627449914423492]]]}},{"type":"Feature","properties":{"id":130,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.88111175719905,8.644690972284783],[76.96399643132635,8.682203884215971],[76.98652114978128,8.66078430359781],[76.9948768149224,8.605199235968524],[76.95591443105464,8.578954402825314],[76.86503300898481,8.617385642477155],[76.88111175719905,8.644690972284783]]]}},{"type":"Feature","properties":{"id":131,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.96399643132635,8.682203884215971],[76.9419278329973,8.777433229732887],[77.01644521485714,8.847825637902442],[77.30632077604268,8.830172569287601],[77.14839538940974,8.719599202957882],[76.98652114978128,8.66078430359781],[76.96399643132635,8.682203884215971]]]}},{"type":"Feature","properties":{"id":132,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.95591443105464,8.578954402825314],[76.9213919952858,8.52349981143194],[76.85905551516929,8.478767615052032],[76.77365045963018,8.544734963375285],[76.86503300898481,8.617385642477155],[76.95591443105464,8.578954402825314]]]}},{"type":"Feature","properties":{"id":133,"alliance":"NDA","color":"#EA580C"},"geometry":{"type":"Polygon","coordinates":[[[76.95591443105464,8.578954402825314],[76.9948768149224,8.605199235968524],[77.04976419245624,8.560029273523366],[77.01207455525962,8.504159928973069],[76.9213919952858,8.52349981143194],[76.95591443105464,8.578954402825314]]]}},{"type":"Feature","properties":{"id":134,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[77.01207455525962,8.504159928973069],[77.00940953156443,8.47853936026714],[76.87415799262611,8.443734223836076],[76.85905551516929,8.478767615052032],[76.9213919952858,8.52349981143194],[77.01207455525962,8.504159928973069]]]}},{"type":"Feature","properties":{"id":135,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.89253910647,8.347150684769485],[76.87415799262611,8.443734223836076],[77.00940953156443,8.47853936026714],[77.02611863770476,8.444085654084851],[76.89253910647,8.347150684769485]]]}},{"type":"Feature","properties":{"id":136,"alliance":"UDF","color":"#2563EB"},"geometry":{"type":"Polygon","coordinates":[[[77.11698335028616,8.526409360305943],[77.05162927414871,8.55992013350235],[77.14839538940974,8.719599202957882],[77.30632077604268,8.830172569287601],[77.32011944969591,8.832917035776308],[77.32053537660893,8.611323974271926],[77.11698335028616,8.526409360305943]]]}},{"type":"Feature","properties":{"id":137,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[77.11698335028616,8.526409360305943],[77.32053537660893,8.611323974271926],[77.32015082473104,8.456259729121893],[77.3078657706977,8.40966628045458],[77.14546540279434,8.413344337567375],[77.10870433383734,8.448122980765852],[77.11698335028616,8.526409360305943]]]}},{"type":"Feature","properties":{"id":138,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[77.11698335028616,8.526409360305943],[77.10870433383734,8.448122980765852],[77.06035085592333,8.429582536780414],[77.02611863770476,8.444085654084851],[77.00940953156443,8.47853936026714],[77.01207455525962,8.504159928973069],[77.04976419245624,8.560029273523366],[77.11698335028616,8.526409360305943]]]}},{"type":"Feature","properties":{"id":139,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[76.9048827299361,8.351550491828776],[77.02611863770476,8.444085654084851],[77.06035085592333,8.429582536780414],[77.04842160338086,8.363837107354609],[76.9048827299361,8.351550491828776]]]}},{"type":"Feature","properties":{"id":140,"alliance":"LDF","color":"#DC2626"},"geometry":{"type":"Polygon","coordinates":[[[77.06035085592333,8.429582536780414],[77.10870433383734,8.448122980765852],[77.14546540279434,8.413344337567375],[77.10360540635334,8.302521770718508],[77.04842160338086,8.363837107354609],[77.06035085592333,8.429582536780414]]]}}]};
+
+  function styleF(f){
+    const col=AC[f.properties.alliance]||'#888';
+    return {fillColor:col,fillOpacity:0.6,color:'#fff',weight:1.2,opacity:1};
+  }
+  function bindF(f,layer){
+    const c=C.find(x=>x.id===f.properties.id);
+    if(!c) return;
+    const col=AC[c.alliance]||'#888';
+    layer.bindTooltip(
+      '<div style="font-weight:700;font-size:13px">'+c.name+'</div>'
+      +'<div style="font-size:12px;color:#555;margin-top:2px">'+c.winner+' ('+c.party+')</div>'
+      +'<div style="font-size:11px;margin-top:2px"><b style="color:'+col+'">'+c.alliance+'</b> &middot; AC '+c.ac+' &middot; '+c.district+'</div>',
+      {sticky:true,direction:'top'}
+    );
+    layer.on('mouseover',function(){this.setStyle({fillOpacity:0.85,weight:2.5,color:'#0F172A'});this.bringToFront();});
+    layer.on('mouseout',function(){this.setStyle({fillOpacity:0.6,weight:1.2,color:'#fff'});});
+    layer.on('click',function(){om(c);});
+    // Store centroid for search & district bounds for labels
+    try{
+      const bnd=layer.getBounds();
+      centroidMap[c.id]=bnd.getCenter();
+      if(!window._districtBoundsMap[c.district]) window._districtBoundsMap[c.district]=L.latLngBounds(bnd.getSouthWest(),bnd.getNorthEast());
+      else window._districtBoundsMap[c.district].extend(bnd);
+    }catch(e){}
+  }
+
+  function addDistrictLabels(){
+    // Bounds computed; sidebar already rendered - mark items ready
+    document.querySelectorAll('.dist-item').forEach(b=>b.setAttribute('data-ready','1'));
+  }
+
+  function loadLayer(data){
+    // Map AC_NO from real GeoJSON
+    const gj={
+      type:'FeatureCollection',
+      features: data.features.map(f=>{
+        const ac=parseInt(f.properties.AC_NO||f.properties.ac||f.properties.id||0);
+        const c=C.find(x=>x.id===ac||x.ac===ac);
+        return {
+          type:'Feature',
+          properties:{id:ac,alliance:c?c.alliance:'LDF',color:c?(AC[c.alliance]||'#888'):'#888'},
+          geometry:f.geometry
+        };
+      })
+    };
+    L.geoJSON(gj,{style:styleF,onEachFeature:bindF}).addTo(map);
+    addDistrictLabels();
+  }
+
+  // Try loading real GeoJSON from CDN (works when online)
+  fetch('https://cdn.jsdelivr.net/gh/HindustanTimesLabs/shapefiles@master/state_ut/kerala/assembly/kerala_AC.json')
+    .then(r=>{if(!r.ok)throw 0;return r.json();})
+    .then(data=>{loadLayer(data);})
+    .catch(()=>{
+      // Fall back to embedded Voronoi
+      L.geoJSON(FALLBACK,{style:styleF,onEachFeature:bindF}).addTo(map);
+      addDistrictLabels();
+    });
+}
+
+function fillFilters(){
+  const ds=[...new Set(C.map(c=>c.district))].sort();
+  const s=document.getElementById('fd');ds.forEach(d=>s.innerHTML+=`<option>${d}</option>`);
+}
+function fc(){
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  const a=document.getElementById('fa').value,d=document.getElementById('fd').value;
+  const list=C.filter(c=>(!q||c.name.toLowerCase().includes(q)||c.winner.toLowerCase().includes(q)||c.party.toLowerCase().includes(q)||c.district.toLowerCase().includes(q))&&(!a||c.alliance===a)&&(!d||c.district===d));
+  document.getElementById('rc').textContent=list.length+' constituency'+(list.length!==1?'s':'');
+  document.getElementById('cg').innerHTML=list.map(cardH).join('');
+}
+function cardH(c){
+  const col=AC[c.alliance]||'#888';
+  const pc=PC[c.party]||'#555';
+  const m=c.verified?c.margin.toLocaleString('en-IN'):'~'+Math.round(c.margin/1000)+'k';
+  const h26=CANDS26[c.id];
+  const sym=pSym(c.party);
+  let candRow='';
+  if(h26){
+    const chips=h26.map(x=>`<span class="sc-cand-chip" style="border-color:${AC[x.alliance]||'#888'};color:${AC[x.alliance]||'#888'}">${pSym(x.party)} ${x.name.split(' ').slice(-1)[0]}</span>`).join('');
+    candRow=`<div class="sc-cand-row">${chips}</div>`;
+  }else{
+    candRow=`<div class="sc-cand-row"><span class="sc-cand-tba">&#128197; Candidates TBA</span></div>`;
+  }
+  return `<div class="sc" onclick="om(C[${c.id-1}])">
+    <div class="sc-accent" style="background:${col}"></div>
+    <div class="sc-body">
+      <div class="sc-num">AC ${c.ac} &middot; ${c.district}</div>
+      <div class="sc-name">${c.name}</div>
+      <div class="sc-dist"><span class="chip ${c.alliance}" style="font-size:10px;padding:2px 7px">${sym} ${c.alliance}</span></div>
+    </div>
+    <div class="sc-mid">
+      ${candRow}
+      <div style="display:flex;align-items:center;gap:9px">
+        ${avSVG(pc)}
+        <div>
+          <div class="sc-mla">${c.winner}</div>
+          <div style="font-size:10px;color:var(--subtle);margin-top:1px">${sym} ${c.party} &middot; 2021 MLA</div>
+        </div>
+      </div>
+    </div>
+    <div class="sc-foot">
+      <span class="sc-margin">Margin <strong>${m}</strong> &middot; ${c.turnout}%</span>
+      <button class="sc-share" onclick="event.stopPropagation();shareC(${c.id})">Share &#8599;</button>
+    </div>
+  </div>`;
+}
+
+function getConstSentiment(cid,alliance){
+  try{
+    const v=JSON.parse(localStorage.getItem('ked3_v')||'{}');
+    let tot=0,av=0;
+    Object.entries(v).forEach(([k,n])=>{
+      const parts=k.split('_');const kid=+parts[0],ka=parts[1];
+      if(kid===cid){tot+=n;if(ka===alliance)av+=n;}
+    });
+    if(!tot)return null;
+    return{pct:Math.round(av/tot*100),total:tot};
+  }catch(e){return null;}
+}
+
+function om(c){
+  curC=c;
+  document.getElementById('mac').textContent='Assembly Constituency '+c.ac+' \u00b7 '+c.district;
+  document.getElementById('mname').textContent=c.name;
+  document.getElementById('mdist').textContent='Kerala Election 2026';
+  const m=c.verified?c.margin.toLocaleString('en-IN'):'~'+c.margin.toLocaleString('en-IN');
+  const pc=PC[c.party]||'#666';
+  const cd=CANDS26[c.id];
+  const mSym=pSym(c.party);
+  let h='';
+
+  // ── 2026 CANDIDATES (hero section — first) ──────────────────────
+  if(cd){
+    h+=`<div class="ms">
+      <div class="mlbl">2026 Candidates<span class="badge-26">Election 2026</span></div>
+      ${cd.map(x=>{
+        const xSym=pSym(x.party);const xCol=PC[x.party]||'#666';
+        const sent=getConstSentiment(c.id,x.alliance);
+        const sentBar=sent
+          ?`<div class="sent-wrap"><div class="sent-label">Community Poll \u00b7 ${sent.pct}% support \u00b7 ${sent.total} vote${sent.total!==1?'s':''}</div><div class="sent-bg"><div class="sent-fill" style="width:${sent.pct}%;background:${AC[x.alliance]||'#888'}"></div></div></div>`
+          :`<div class="sent-wrap"><div class="sent-label" style="color:var(--subtle)">Community Poll \u00b7 No votes yet \u2014 <a href="#" onclick="event.preventDefault();gv();cm()" style="color:var(--ldf);text-decoration:none;font-weight:600">Cast yours \u2197</a></div><div class="sent-bg"><div class="sent-fill" style="width:0%;background:var(--border)"></div></div></div>`;
+        return`<div class="ci">${avSVG(xCol)}<div style="flex:1"><div class="cn">${x.name}${x.incumbent?'<span class="itag">Sitting MLA</span>':''}</div><div class="cp">${xSym} ${x.party} \u00b7 Candidate 2026</div>${sentBar}</div><span class="chip ${x.alliance}" style="margin-left:auto">${xSym} ${x.alliance}</span></div>`;
+      }).join('')}
+    </div>`;
+  }else{
+    h+=`<div class="ms">
+      <div class="mlbl">2026 Candidates<span class="badge-26">Election 2026</span></div>
+      <div class="ci ci-tba"><div class="av" style="background:#E5E5E3"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="4" fill="rgba(0,0,0,0.15)"/><path d="M4 21c0-4.418 3.582-8 8-8s8 3.582 8 8" fill="rgba(0,0,0,0.1)"/></svg></div><div style="flex:1"><div class="cn tba-name">LDF Candidate \u2014 TBA</div><div class="cp" style="color:var(--muted)">Nomination pending</div></div><span class="chip LDF" style="margin-left:auto;opacity:0.5">\u262d LDF</span></div>
+      <div class="ci ci-tba"><div class="av" style="background:#E5E5E3"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="4" fill="rgba(0,0,0,0.15)"/><path d="M4 21c0-4.418 3.582-8 8-8s8 3.582 8 8" fill="rgba(0,0,0,0.1)"/></svg></div><div style="flex:1"><div class="cn tba-name">UDF Candidate \u2014 TBA</div><div class="cp" style="color:var(--muted)">Nomination pending</div></div><span class="chip UDF" style="margin-left:auto;opacity:0.5">\u270b UDF</span></div>
+      <div class="ci ci-tba"><div class="av" style="background:#E5E5E3"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="4" fill="rgba(0,0,0,0.15)"/><path d="M4 21c0-4.418 3.582-8 8-8s8 3.582 8 8" fill="rgba(0,0,0,0.1)"/></svg></div><div style="flex:1"><div class="cn tba-name">NDA Candidate \u2014 TBA</div><div class="cp" style="color:var(--muted)">Nomination pending</div></div><span class="chip NDA" style="margin-left:auto;opacity:0.5">\U0001fab7 NDA</span></div>
+      <div style="font-size:11px;color:var(--muted);margin-top:10px;padding:9px 12px;background:var(--bg);border-radius:9px;line-height:1.5">&#128197; Candidate lists being announced daily. Updated as parties confirm nominations.</div>
+    </div>`;
+  }
+
+  // ── CURRENT MLA ────────────────────────────────────────────────
+  h+=`<div class="ms ms-ref">
+    <div class="mlbl">Current MLA</div>
+    <div class="rb"><div class="rrow">${avSVG(pc)}
+    <div class="ri">
+      <div class="rname">${c.winner}${c.note?' <span style="font-size:11px;font-weight:400;color:#888">('+c.note+')</span>':''}</div>
+      <div class="rparty">${mSym} ${c.party} \u00b7 Current MLA</div>
+      <div style="font-size:10px;color:var(--subtle);margin-top:2px">Incumbent \u00b7 ${c.alliance}</div>
+    </div>
+    <span class="chip ${c.alliance}">${mSym} ${c.alliance}</span></div>
+    <div class="rstats"><div class="rstat"><div class="rsv">${m}</div><div class="rsl">Margin</div></div><div class="rstat"><div class="rsv">${c.turnout}%</div><div class="rsl">Turnout</div></div><div class="rstat"><div class="rsv">${Math.round(c.votes/1000)}k</div><div class="rsl">Votes</div></div></div></div>
+    ${!c.verified?'<div style="font-size:11px;color:#B45309;margin-top:7px">&#9888; Pending official verification</div>':''}
+  </div>`;
+
+  h+=`<div class="mactions"><button class="btn btn-d" onclick="gv()">Vote for This Seat</button><button class="btn btn-o" onclick="window.open('https://myneta.info/Kerala2021/?Action=show_winners&sort=default','_blank')">Affidavit &#8599;</button><button class="btn btn-o" onclick="shareC(${c.id});cm()">Share Link</button><button class="btn btn-o" onclick="cm()">Close</button></div>`;
+  document.getElementById('mb').innerHTML=h;
+  document.getElementById('ovl').classList.add('on');
+}
+function cm(){document.getElementById('ovl').classList.remove('on');}
+function bgc(e){if(e.target===document.getElementById('ovl'))cm();}
+function gv(){if(curC){document.getElementById('vc').value=curC.id;pc2();}cm();sw('poll');}
+
+function shareC(id){
+  const u=location.origin+location.pathname+'?c='+id;
+  if(navigator.clipboard)navigator.clipboard.writeText(u);else{const t=document.createElement('textarea');t.value=u;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);}
+  showT('Link copied \u2014 share on WhatsApp or Instagram!');
+}
+
+function fillVoteDrop(){const s=document.getElementById('vc');C.forEach(c=>s.innerHTML+=`<option value="${c.id}">${c.ac}. ${c.name} (${c.district})</option>`);}
+function pc2(){
+  const id=+document.getElementById('vc').value,g=document.getElementById('cg2'),s=document.getElementById('vca');
+  if(!id){g.style.display='none';return;}g.style.display='block';
+  s.innerHTML='<option value="">&#8212; Choose &#8212;</option>';
+  const cd=CANDS26[id];
+  if(cd)cd.forEach(x=>s.innerHTML+=`<option value="${x.alliance}">${x.name} (${x.party})</option>`);
+  else{s.innerHTML+='<option value="LDF">LDF Candidate</option><option value="UDF">UDF Candidate</option><option value="NDA">NDA Candidate</option><option value="IND">NOTA / Independent</option>';}
+}
+function cv(){
+  const cid=document.getElementById('vc').value,cand=document.getElementById('vca').value;
+  if(!cid||!cand){showT('Please select a constituency and candidate.');return;}
+  if(localStorage.getItem('ked3_vd_'+cid)){showT('Already voted for this constituency!');return;}
+  const v=JSON.parse(localStorage.getItem('ked3_v')||'{}');const k=cid+'_'+cand;v[k]=(v[k]||0)+1;
+  localStorage.setItem('ked3_v',JSON.stringify(v));localStorage.setItem('ked3_vd_'+cid,'1');
+  document.getElementById('pfi').style.display='none';document.getElementById('vsu').style.display='block';
+  initBars();rvc();showT('\uD83D\uDDF3\uFE0F Vote recorded!');
+}
+function rvf(){document.getElementById('pfi').style.display='block';document.getElementById('vsu').style.display='none';document.getElementById('vc').value='';document.getElementById('cg2').style.display='none';}
+function initBars(){
+  const v=JSON.parse(localStorage.getItem('ked3_v')||'{}');
+  const t={LDF:0,UDF:0,NDA:0,IND:0};
+  Object.entries(v).forEach(([k,n])=>{const a=k.split('_')[1];t[a]=(t[a]||0)+n;});
+  const tot=Object.values(t).reduce((a,b)=>a+b,0);
+  const bars=[{k:'LDF',l:'LDF \u2014 Left Front'},{k:'UDF',l:'UDF \u2014 Congress'},{k:'NDA',l:'NDA \u2014 BJP'},{k:'IND',l:'NOTA / Independent'}];
+  document.getElementById('pbars').innerHTML=bars.map(b=>{const n=t[b.k]||0,pct=tot?Math.round(n/tot*100):0,col=AC[b.k]||'#888';return`<div class="brr"><div class="brtop"><span class="brname">${b.l}</span><span class="brpct">${n} vote${n!==1?'s':''} &middot; ${pct}%</span></div><div class="brbg"><div class="brfill" style="width:${pct}%;background:${col}"></div></div></div>`;}).join('');
+  document.getElementById('tvn').textContent=tot.toLocaleString('en-IN');
+}
+
+function sw(name){
+  if(name==='quiz'){openQuiz();return;}
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('p-'+name).classList.add('on');
+  const ord=['map','seats','poll','about'];
+  const b=document.querySelectorAll('.tab')[ord.indexOf(name)];if(b)b.classList.add('on');
+  const u=new URL(location);u.searchParams.set('tab',name);history.replaceState({},'',u);
+}
+function showT(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3000);}
 </script>
+
+</div><!-- /appWrap -->
+
+<footer class="stats-footer">
+  <div class="stats-footer-label">Current MLA &mdash; Reference</div>
+  <div class="stats-inner">
+    <div class="stat"><div class="sv" style="color:#F8FAFC">140</div><div class="sl">Total Seats</div></div>
+    <div class="stat"><div class="sv" style="color:#FCA5A5">99</div><div class="sl">LDF 2021</div></div>
+    <div class="stat"><div class="sv" style="color:#93C5FD">41</div><div class="sl">UDF 2021</div></div>
+    <div class="stat"><div class="sv" style="color:#FDB889">1</div><div class="sl">NDA 2021</div></div>
+    <div class="stat"><div class="sv" style="color:#86EFAC">2.69 Cr</div><div class="sl">Registered Voters</div></div>
+    <div class="stat"><div class="sv" style="color:#86EFAC" id="tvh">0</div><div class="sl">Sentiment Votes</div></div>
+  </div>
+</footer>
+
+<script>
+/* ── Landing page controller ─────────────────────────────────── */
+(function(){
+  const landing   = document.getElementById('landing');
+  const appWrap   = document.getElementById('appWrap');
+  const drawer    = document.getElementById('navDrawer');
+  const drawerOvl = document.getElementById('drawerOverlay');
+  const burger    = document.getElementById('burgerBtn');
+
+  // Kick off background parallax zoom
+  requestAnimationFrame(()=>{ landing.classList.add('loaded'); });
+
+</script>
+
+<div id="quizOverlay" aria-hidden="true">
+  <div class="quiz-shell">
+    <div id="quizRoot"></div>
+  </div>
+</div>
 </body>
 </html>
