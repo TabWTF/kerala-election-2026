@@ -1,0 +1,7 @@
+id,text,agreeEconomic,disagreeEconomic,agreeSocial,disagreeSocial
+Q1,"Kerala needs more private investment and industry, even if it means some government sector reduction.",1,-1,0,0
+Q2,"Government hospitals and public schools will always serve ordinary Keralites better than private ones.",-1,1,0,0
+Q3,"Religious and community organisations should stay out of political decision-making.",0,0,1,-1
+Q4,"Large infrastructure projects are worth pursuing even when they face community opposition.",1,-1,0,0
+Q5,"Protecting Kerala's land, forests and waterways should come before industrial development.",0,0,1,-1
+Q6,"A government that delivers stability and development deserves to continue, regardless of controversies.",0,0,-1,1
