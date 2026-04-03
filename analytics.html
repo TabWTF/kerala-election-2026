@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Analytics — Kerala Election 2026</title>
+<meta name="robots" content="noindex,nofollow"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#0f1728;color:#e2e8f0;min-height:100vh}
+#gate{display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:16px}
+#gate h2{font-size:22px;font-weight:700;color:#fff}
+#gate p{font-size:14px;color:rgba(255,255,255,.5)}
+#pinInput{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:14px 20px;font-size:24px;letter-spacing:8px;color:#fff;width:180px;text-align:center;font-family:'Inter',sans-serif;outline:none}
+#pinInput:focus{border-color:rgba(179,38,30,.6)}
+#pinBtn{background:#b3261e;color:#fff;border:none;border-radius:12px;padding:13px 32px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
+#pinBtn:hover{background:#9b1b14}
+#pinErr{color:#f87171;font-size:13px;display:none}
+#dash{display:none;padding:32px 24px;max-width:1100px;margin:0 auto}
+.dash-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:12px}
+.dash-hdr h1{font-size:22px;font-weight:700}
+.dash-hdr span{font-size:13px;color:rgba(255,255,255,.4)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:32px}
+.card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:20px 22px}
+.card-label{font-size:12px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.card-val{font-size:36px;font-weight:800;color:#fff;line-height:1}
+.card-sub{font-size:12px;color:rgba(255,255,255,.35);margin-top:6px}
+.card.accent{border-color:rgba(179,38,30,.35);background:rgba(179,38,30,.08)}
+.card.accent .card-val{color:#f87171}
+.section{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:22px;margin-bottom:20px}
+.section h3{font-size:14px;font-weight:600;color:rgba(255,255,255,.7);margin-bottom:18px;letter-spacing:.04em;text-transform:uppercase}
+.bar-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.bar-label{font-size:13px;color:rgba(255,255,255,.7);width:50px;text-align:right;flex-shrink:0}
+.bar-track{flex:1;background:rgba(255,255,255,.07);border-radius:4px;height:10px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width 1s ease}
+.bar-num{font-size:12px;color:rgba(255,255,255,.45);width:44px;flex-shrink:0}
+.ldf-bar{background:#b3261e}.udf-bar{background:#2b6cb0}.nda-bar{background:#d97706}.ind-bar{background:#64748b}
+.trend-row{display:flex;align-items:flex-end;gap:4px;height:80px}
+.trend-bar{flex:1;background:rgba(179,38,30,.5);border-radius:3px 3px 0 0;transition:height .8s ease;min-height:2px}
+.trend-labels{display:flex;justify-content:space-between;margin-top:6px}
+.trend-labels span{font-size:10px;color:rgba(255,255,255,.3)}
+.embed-note{font-size:13px;color:rgba(255,255,255,.4);margin-top:20px;line-height:1.6}
+.embed-note a{color:#93c5fd;text-decoration:none}
+.refresh-btn{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:7px 16px;color:rgba(255,255,255,.7);font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .18s}
+.refresh-btn:hover{background:rgba(255,255,255,.12);color:#fff}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<!-- PIN Gate -->
+<div id="gate">
+  <h2>🗳️ Analytics Dashboard</h2>
+  <p>Kerala Election 2026 · Private</p>
+  <input id="pinInput" type="password" maxlength="4" placeholder="••••" oninput="if(this.value.length===4)checkPin()"/>
+  <div id="pinErr">Incorrect PIN. Try again.</div>
+  <p style="font-size:11px;color:rgba(255,255,255,.25);margin-top:4px">Enter 4-digit PIN</p>
+</div>
+
+<!-- Dashboard -->
+<div id="dash">
+  <div class="dash-hdr">
+    <div>
+      <h1>📊 Site Analytics</h1>
+      <span id="lastUpdated">Last updated: —</span>
+    </div>
+    <button class="refresh-btn" onclick="loadData()">↻ Refresh</button>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="cards">
+    <div class="card accent">
+      <div class="card-label">Quiz Takers</div>
+      <div class="card-val" id="statQuiz">—</div>
+      <div class="card-sub">Total via counterapi.dev</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Constituencies</div>
+      <div class="card-val">140</div>
+      <div class="card-sub">All Kerala seats</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Candidates</div>
+      <div class="card-val" id="statCands">—</div>
+      <div class="card-sub">2026 contesting</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Local Votes Cast</div>
+      <div class="card-val" id="statVotes">—</div>
+      <div class="card-sub">Opinion poll (this device)</div>
+    </div>
+  </div>
+
+  <!-- Local opinion poll breakdown -->
+  <div class="section">
+    <h3>Opinion Poll — Local Alliance Breakdown</h3>
+    <div class="bar-row"><div class="bar-label">LDF</div><div class="bar-track"><div class="bar-fill ldf-bar" id="ldfBar" style="width:0%"></div></div><div class="bar-num" id="ldfPct">0%</div></div>
+    <div class="bar-row"><div class="bar-label">UDF</div><div class="bar-track"><div class="bar-fill udf-bar" id="udfBar" style="width:0%"></div></div><div class="bar-num" id="udfPct">0%</div></div>
+    <div class="bar-row"><div class="bar-label">NDA</div><div class="bar-track"><div class="bar-fill nda-bar" id="ndaBar" style="width:0%"></div></div><div class="bar-num" id="ndaPct">0%</div></div>
+    <div class="bar-row"><div class="bar-label">IND</div><div class="bar-track"><div class="bar-fill ind-bar" id="indBar" style="width:0%"></div></div><div class="bar-num" id="indPct">0%</div></div>
+    <div class="card-sub" style="margin-top:12px">Based on localStorage opinion votes on this device/browser</div>
+  </div>
+
+  <!-- Counter growth trend (simulated from API) -->
+  <div class="section">
+    <h3>Quiz Taker Count (Live)</h3>
+    <div style="font-size:42px;font-weight:800;color:#f87171" id="bigCount">—</div>
+    <div class="card-sub" style="margin-top:4px">People have taken the quiz at indiaelectiondatabase.com</div>
+    <div class="embed-note" style="margin-top:16px">
+      For full traffic analytics (pageviews, countries, devices) add
+      <a href="https://plausible.io" target="_blank">Plausible.io</a> or
+      <a href="https://analytics.google.com" target="_blank">Google Analytics</a> to index.html.<br>
+      For Netlify built-in analytics: <a href="https://app.netlify.com/sites/kerala-election-database/analytics" target="_blank">Netlify Analytics Dashboard ↗</a>
+    </div>
+  </div>
+
+  <!-- Quick links -->
+  <div class="section">
+    <h3>Quick Links</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:4px">
+      <a href="https://indiaelectiondatabase.com" target="_blank" style="color:#93c5fd;font-size:13px">🌐 Live Site</a>
+      <a href="https://app.netlify.com/sites/kerala-election-database/deploys" target="_blank" style="color:#93c5fd;font-size:13px">🚀 Netlify Deploys</a>
+      <a href="https://github.com/TabWTF/kerala-election-2026" target="_blank" style="color:#93c5fd;font-size:13px">⬡ GitHub Repo</a>
+      <a href="https://api.counterapi.dev/v1/kerala-election-2026/quiz-takers-v1/" target="_blank" style="color:#93c5fd;font-size:13px">🔢 Counter API</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const PIN='2026'; // ← change this PIN
+function checkPin(){
+  const v=document.getElementById('pinInput').value;
+  if(v===PIN){
+    document.getElementById('gate').style.display='none';
+    document.getElementById('dash').style.display='block';
+    loadData();
+  }else{
+    document.getElementById('pinErr').style.display='block';
+    document.getElementById('pinInput').value='';
+  }
+}
+document.getElementById('pinInput').addEventListener('keydown',e=>{if(e.key==='Enter')checkPin();});
+
+async function loadData(){
+  document.getElementById('lastUpdated').innerHTML='<span class="spinner"></span>Fetching…';
+  // Quiz counter
+  try{
+    const r=await fetch('/.netlify/functions/counter?path=kerala-election-2026/quiz-takers-v1');
+    const d=await r.json();
+    if(d.count!=null){
+      document.getElementById('statQuiz').textContent=d.count.toLocaleString();
+      document.getElementById('bigCount').textContent=d.count.toLocaleString();
+    }
+  }catch(e){document.getElementById('statQuiz').textContent='N/A';}
+
+  // Local opinion poll
+  try{
+    const v=JSON.parse(localStorage.getItem('ked3_v')||'{}');
+    const t={LDF:0,UDF:0,NDA:0,IND:0};
+    Object.entries(v).forEach(([k,n])=>{const a=k.split('_')[1];if(t[a]!=null)t[a]+=n;});
+    const tot=Object.values(t).reduce((a,b)=>a+b,0);
+    document.getElementById('statVotes').textContent=tot;
+    ['LDF','UDF','NDA','IND'].forEach(a=>{
+      const pct=tot>0?Math.round(t[a]/tot*100):0;
+      const id=a.toLowerCase();
+      document.getElementById(id+'Bar').style.width=pct+'%';
+      document.getElementById(id+'Pct').textContent=pct+'%';
+    });
+  }catch(e){}
+
+  // Candidate count from global CANDS26 if available (loaded in parent)
+  try{
+    const cands=Object.values(window.opener?.CANDS26||{}).reduce((a,b)=>a+b.length,0);
+    if(cands>0)document.getElementById('statCands').textContent=cands.toLocaleString();
+    else document.getElementById('statCands').textContent='~1,000+';
+  }catch(e){document.getElementById('statCands').textContent='~1,000+';}
+
+  document.getElementById('lastUpdated').textContent='Last updated: '+new Date().toLocaleTimeString();
+}
+</script>
+</body>
+</html>

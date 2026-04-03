@@ -2139,10 +2139,6 @@ button,a,.quiz-pill,.quiz-promise,.quiz-const-option,.quiz-card,.quiz-answer,.qu
         Know Your Politics
       </button>
     </div>
-    <button class="lp-share-btn" onclick="openShareSheet('site')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="14" height="14"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-      Share this site
-    </button>
   </div>
 
   <!-- Bottom bar: manifesto cards + date -->
@@ -3545,7 +3541,6 @@ function cardH(c){
     </div>
     <div class="sc-foot">
       <span class="sc-margin">Margin <strong>${m}</strong> &middot; ${c.turnout}%</span>
-      <button class="sc-share" onclick="event.stopPropagation();shareC(${c.id})">Share &#8599;</button>
     </div>
   </div>`;
 }
@@ -3613,7 +3608,7 @@ function om(c){
     ${!c.verified?'<div style="font-size:11px;color:#B45309;margin-top:7px">&#9888; Pending official verification</div>':''}
   </div>`;
 
-  h+=`<div class="mactions"><button class="btn btn-d" onclick="gv()">Vote for This Seat</button><button class="btn btn-o" onclick="window.open('https://myneta.info/Kerala2021/?Action=show_winners&sort=default','_blank')">Affidavit &#8599;</button><button class="btn btn-o" onclick="shareC(${c.id});cm()">Share Link</button><button class="btn btn-o" onclick="cm()">Close</button></div>`;
+  h+=`<div class="mactions"><button class="btn btn-d" onclick="cm();setTimeout(openQuiz,200)">Know Your Politics</button><button class="btn btn-o" onclick="window.open('https://myneta.info/Kerala2021/?Action=show_winners&sort=default','_blank')">Affidavit &#8599;</button><button class="btn btn-o" onclick="cm()">Close</button></div>`;
   document.getElementById('mb').innerHTML=h;
   document.getElementById('ovl').classList.add('on');
 }
@@ -4332,14 +4327,6 @@ function quizProgressPct(){return Math.min(100,(quizState.step/3)*100);}
 
 // ── Platform-aware Share Sheet ───────────────────────────────
 const SITE_URL='https://indiaelectiondatabase.com';
-const SHARE_COPY={
-  site:{
-    wa:`Which party actually matches YOUR priorities? Take this 2-minute Kerala election quiz and find out 👇\nhttps://indiaelectiondatabase.com`,
-    x:`Who do YOUR priorities actually align with in Kerala 2026?\n\nTrack all 140 seats, candidates, alliances and take the political alignment quiz 🗳️\n\nhttps://indiaelectiondatabase.com`,
-    li:`https://indiaelectiondatabase.com`,
-    copy:`https://indiaelectiondatabase.com`,
-  },
-};
 let _shareCtx=null;
 function openShareSheet(type,extra){
   _shareCtx={type,extra};
@@ -4351,38 +4338,110 @@ function closeShareSheet(){
   if(el)el.classList.remove('on');
   _shareCtx=null;
 }
-function doShare(platform){
+
+// Generate a branded quiz result image via Canvas
+function generateQuizResultImage(top,score){
+  return new Promise(resolve=>{
+    const W=1200,H=630;
+    const cv=document.createElement('canvas');
+    cv.width=W;cv.height=H;
+    const ctx=cv.getContext('2d');
+    // Background gradient
+    const bg=ctx.createLinearGradient(0,0,0,H);
+    bg.addColorStop(0,'#0f1728');bg.addColorStop(1,'#1a0a08');
+    ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+    // Subtle red accent band
+    const band=ctx.createLinearGradient(0,H*0.55,0,H);
+    band.addColorStop(0,'rgba(179,38,30,0)');band.addColorStop(1,'rgba(179,38,30,0.18)');
+    ctx.fillStyle=band;ctx.fillRect(0,H*0.55,W,H*0.45);
+    // Alliance colour map
+    const aColors={LDF:'#b3261e',UDF:'#2b6cb0',NDA:'#d97706'};
+    const ac=aColors[top]||'#b3261e';
+    // Accent stripe top
+    ctx.fillStyle=ac;ctx.fillRect(0,0,W,6);
+    // Eyebrow
+    ctx.font='700 22px Inter,sans-serif';ctx.fillStyle='rgba(255,255,255,0.5)';
+    ctx.textAlign='center';
+    ctx.fillText('KERALA LEGISLATIVE ASSEMBLY ELECTION 2026',W/2,70);
+    // Divider
+    ctx.strokeStyle='rgba(255,255,255,0.12)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(W*0.1,90);ctx.lineTo(W*0.9,90);ctx.stroke();
+    // Label
+    ctx.font='500 28px Inter,sans-serif';ctx.fillStyle='rgba(255,255,255,0.6)';
+    ctx.fillText('My political alignment:',W/2,160);
+    // Alliance name
+    ctx.font='800 86px Inter,sans-serif';ctx.fillStyle=ac;
+    ctx.fillText(top,W/2,270);
+    // Score bar background
+    const bx=W*0.25,by=310,bw=W*0.5,bh=18;
+    ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();
+    ctx.roundRect(bx,by,bw,bh,9);ctx.fill();
+    ctx.fillStyle=ac;ctx.beginPath();
+    ctx.roundRect(bx,by,bw*(score/100),bh,9);ctx.fill();
+    // Score text
+    ctx.font='700 48px Inter,sans-serif';ctx.fillStyle='#ffffff';
+    ctx.fillText(score+'% match',W/2,400);
+    // Invite
+    ctx.font='500 26px Inter,sans-serif';ctx.fillStyle='rgba(255,255,255,0.55)';
+    ctx.fillText('Take the quiz and find out YOUR alignment 👇',W/2,476);
+    // URL
+    ctx.font='600 28px Inter,sans-serif';ctx.fillStyle='rgba(255,255,255,0.8)';
+    ctx.fillText('indiaelectiondatabase.com',W/2,530);
+    cv.toBlob(b=>resolve(b),'image/jpeg',0.88);
+  });
+}
+
+async function doShare(platform){
   if(!_shareCtx)return;
   const{type,extra}=_shareCtx;
-  const siteUrl=SITE_URL;
-  let msg='',url=siteUrl;
+  closeShareSheet();
+  const url=SITE_URL;
+
+  // ── Quiz result share (with image on mobile)
+  if(type==='quiz'){
+    const top=extra?.top||'LDF',score=extra?.score||0;
+    const quizMsg=`I took the Kerala 2026 Political Alignment Quiz 🗳️\nMy alignment: ${top} (${score}% match)\n\nFind out yours 👇\n${url}`;
+    const tweetMsg=`My Kerala 2026 political alignment: ${top} — ${score}% match 🗳️\n\nFind yours: ${url}`;
+    // Try Web Share API with image (works on mobile)
+    if(platform==='wa'||platform==='copy'||(platform==='x'&&navigator.canShare)){
+      try{
+        const blob=await generateQuizResultImage(top,score);
+        const file=new File([blob],'kerala-quiz-result.jpg',{type:'image/jpeg'});
+        if(navigator.canShare&&navigator.canShare({files:[file]})){
+          await navigator.share({files:[file],text:platform==='x'?tweetMsg:quizMsg,url});
+          return;
+        }
+      }catch(e){}
+    }
+    // Fallback URL-based sharing
+    if(platform==='wa') window.open('https://wa.me/?text='+encodeURIComponent(quizMsg),'_blank');
+    else if(platform==='x') window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(tweetMsg),'_blank');
+    else if(platform==='li') window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(url),'_blank');
+    else if(platform==='copy'){
+      if(navigator.clipboard)navigator.clipboard.writeText(url).then(()=>showT('Link copied!'));
+    }
+    return;
+  }
+
+  // ── Site share
+  let msg='',shareUrl=url;
   if(type==='site'){
-    msg=SHARE_COPY.site[platform];
-    url=siteUrl;
-  }else if(type==='quiz'){
-    const quizUrl=siteUrl+'/?tab=quiz';
-    url=quizUrl;
-    if(platform==='wa') msg=`Which party actually matches YOUR priorities? Take this 2-minute Kerala election quiz and find out 👇\n${quizUrl}`;
-    else if(platform==='x') msg=`I took the Kerala 2026 Political Alignment quiz. My top match: ${extra?.top||''} (${extra?.score||0}%). Curious about yours? 🗳️\n${quizUrl}`;
-    else msg=quizUrl;
+    if(platform==='wa') msg=`Which party actually matches YOUR priorities? Take this 2-minute Kerala election quiz and find out 👇\n${url}`;
+    else if(platform==='x') msg=`Who do YOUR priorities actually align with in Kerala 2026?\n\nTrack all 140 seats, candidates, alliances and take the political alignment quiz 🗳️\n\n${url}`;
+    else msg=url;
   }else if(type==='constituency'){
-    const cUrl=`${siteUrl}/?c=${extra?.id}`;
-    url=cUrl;
+    const cUrl=`${url}/?c=${extra?.id}`;shareUrl=cUrl;
     if(platform==='wa') msg=`Check the Kerala 2026 candidates for ${extra?.name} 👇\n${cUrl}`;
     else if(platform==='x') msg=`Kerala 2026: Who's contesting in ${extra?.name}? Candidates and alliance breakdown 🗳️\n${cUrl}`;
     else msg=cUrl;
   }
-  if(platform==='wa'){
-    window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
-  }else if(platform==='x'){
-    window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(msg),'_blank');
-  }else if(platform==='li'){
-    window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(url),'_blank');
-  }else if(platform==='copy'){
-    if(navigator.clipboard){navigator.clipboard.writeText(url).then(()=>showT('Link copied!'));}
-    else{const t=document.createElement('textarea');t.value=url;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);showT('Link copied!');}
+  if(platform==='wa') window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+  else if(platform==='x') window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(msg),'_blank');
+  else if(platform==='li') window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(shareUrl),'_blank');
+  else if(platform==='copy'){
+    if(navigator.clipboard)navigator.clipboard.writeText(shareUrl).then(()=>showT('Link copied!'));
+    else{const t=document.createElement('textarea');t.value=shareUrl;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);showT('Link copied!');}
   }
-  closeShareSheet();
 }
 
 // ── Quiz taker counter (counterapi.dev) ──────────────────────
