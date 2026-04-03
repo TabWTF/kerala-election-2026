@@ -4257,7 +4257,7 @@ function formatQuizCount(n){
   return String(n);
 }
 function fetchQuizCount(){
-  fetch(`https://api.counterapi.dev/v1/${COUNTER_NS}/${COUNTER_KEY}/get`)
+  fetch(`https://api.counterapi.dev/v1/${COUNTER_NS}/${COUNTER_KEY}`)
     .then(r=>r.json()).then(d=>{
       const el=document.getElementById('qtbCount');
       if(el && d.count!=null) el.textContent=formatQuizCount(d.count);
