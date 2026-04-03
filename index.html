@@ -3575,13 +3575,9 @@ function om(c){
       <div class="mlbl">2026 Candidates<span class="badge-26">Election 2026</span></div>
       ${cd.map(x=>{
         const xSym=pSym(x.party);const xCol=PC[x.party]||'#666';
-        const sent=getConstSentiment(c.id,x.alliance);
-        const sentBar=sent
-          ?`<div class="sent-wrap"><div class="sent-label">Community Poll \u00b7 ${sent.pct}% support \u00b7 ${sent.total} vote${sent.total!==1?'s':''}</div><div class="sent-bg"><div class="sent-fill" style="width:${sent.pct}%;background:${AC[x.alliance]||'#888'}"></div></div></div>`
-          :`<div class="sent-wrap"><div class="sent-label" style="color:var(--subtle)">Find your alignment \u2014 <a href="#" onclick="event.preventDefault();cm();setTimeout(openQuiz,200)" style="color:var(--ldf);text-decoration:none;font-weight:600">Know Your Politics \u2197</a></div><div class="sent-bg"><div class="sent-fill" style="width:0%;background:var(--border)"></div></div></div>`;
         const photoPath=PHOTO_MAP&&PHOTO_MAP[x.name];
         const avEl=photoPath?`<div class="av" style="background:${xCol}"><img src="${photoPath}" alt="${x.name}" style="width:100%;height:100%;object-fit:cover;border-radius:14px" onerror="this.parentElement.innerHTML='<svg viewBox=\\'0 0 24 24\\' fill=\\'none\\'><circle cx=\\'12\\' cy=\\'9\\' r=\\'4\\' fill=\\'rgba(255,255,255,0.92)\\'/><path d=\\'M4 21c0-4.418 3.582-8 8-8s8 3.582 8 8\\' fill=\\'rgba(255,255,255,0.75)\\'/></svg>'"></div>`:avSVG(xCol);
-        return`<div class="ci">${avEl}<div style="flex:1"><div class="cn">${x.name}${x.incumbent?'<span class="itag">Sitting MLA</span>':''}</div><div class="cp">${xSym} ${x.party} \u00b7 Candidate 2026</div>${sentBar}</div><span class="chip ${x.alliance}" style="margin-left:auto">${xSym} ${x.alliance}</span></div>`;
+        return`<div class="ci">${avEl}<div style="flex:1"><div class="cn">${x.name}${x.incumbent?'<span class="itag">Sitting MLA</span>':''}</div><div class="cp">${xSym} ${x.party} \u00b7 Candidate 2026</div></div><span class="chip ${x.alliance}" style="margin-left:auto">${xSym} ${x.alliance}</span></div>`;
       }).join('')}
     </div>`;
   }else{
