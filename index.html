@@ -4412,8 +4412,8 @@ async function doShare(platform){
   // ── Quiz result share (with image on mobile)
   if(type==='quiz'){
     const top=extra?.top||'LDF',score=extra?.score||0;
-    const quizMsg=`Which party actually matches YOUR priorities? 🗳️\nTake this 2-minute Kerala election quiz and find out 👇\n${url}\n\n(I got ${top} — ${score}% match)`;
-    const tweetMsg=`Which party actually matches YOUR priorities?\n\nTake this 2-minute Kerala election quiz and find out 👇\n${url}\n\n(My result: ${top} — ${score}% match)`;
+    const quizMsg=`Which party actually matches YOUR priorities? 🗳️\nTake this 2-minute Kerala election quiz and find out 👇\n${url}`;
+    const tweetMsg=`Which party actually matches YOUR priorities?\n\nTake this 2-minute Kerala election quiz and find out 👇\n${url}`;
 
     // WhatsApp: iOS silently drops text when sharing files via Web Share API.
     // Solution: copy message to clipboard first, share image via native sheet,
