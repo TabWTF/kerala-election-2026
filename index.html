@@ -1973,9 +1973,13 @@ header,.nav,.stats,.stats-footer{
 
 
 /* ── Quiz taker counter ──────────────────────────────────────── */
-#quizTakerBadge{position:fixed;top:16px;right:16px;z-index:10000;display:flex;align-items:center;gap:6px;background:#111827;border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:6px 13px 6px 9px;box-shadow:0 4px 16px rgba(0,0,0,.28);font-size:12px;color:rgba(255,255,255,.85);font-weight:500;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);cursor:default;white-space:nowrap;letter-spacing:.2px}
+#quizTakerBadge{position:fixed;top:16px;right:16px;z-index:10000;display:flex;align-items:center;gap:6px;background:#111827;border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:6px 8px 6px 9px;box-shadow:0 4px 16px rgba(0,0,0,.28);font-size:12px;color:rgba(255,255,255,.85);font-weight:500;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);cursor:default;white-space:nowrap;letter-spacing:.2px}
 #quizTakerBadge .qtb-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;flex-shrink:0;animation:qtbPulse 2s infinite}
 #quizTakerBadge .qtb-num{font-weight:700;font-size:13px;color:#ffffff;margin-right:1px}
+.qtb-div{width:1px;height:13px;background:rgba(255,255,255,.2);flex-shrink:0;margin:0 2px}
+.qtb-share{background:none;border:none;padding:3px;cursor:pointer;display:flex;align-items:center;color:rgba(255,255,255,.6);transition:color .15s;border-radius:6px}
+.qtb-share:hover{color:#fff}
+.qtb-share svg{width:13px;height:13px;flex-shrink:0}
 @keyframes qtbPulse{0%,100%{opacity:1}50%{opacity:.35}}
 
 /* ── Platform Share Sheet ───────────────────────────────────── */
@@ -2280,7 +2284,7 @@ button,a,.quiz-pill,.quiz-promise,.quiz-const-option,.quiz-card,.quiz-answer,.qu
   </div>
 </div>
 
-<div id="quizTakerBadge" title="People who took the quiz"><span class="qtb-dot"></span><span class="qtb-num" id="qtbCount">—</span>&nbsp;took the quiz</div>
+<div id="quizTakerBadge" title="People who took the quiz"><span class="qtb-dot"></span><span class="qtb-num" id="qtbCount">—</span>&nbsp;took the quiz<span class="qtb-div"></span><button class="qtb-share" onclick="openShareSheet('site')" title="Share this site"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button></div>
 <div id="appWrap">
 
 <header>
@@ -2297,10 +2301,6 @@ button,a,.quiz-pill,.quiz-promise,.quiz-const-option,.quiz-card,.quiz-answer,.qu
         <div class="cd-dot"></div>
         <span class="cd-text"><span class="cd-num" id="cdNum">--</span> to Apr 9</span>
       </div>
-      <button class="hd-share" onclick="openShareSheet('site')" title="Share this site">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-        <span>Share</span>
-      </button>
     </div>
   </div>
 </header>
