@@ -386,7 +386,7 @@ input,select,textarea{color-scheme:dark}
 .sc-dist{font-size:11px;color:var(--muted);margin-top:2px}
 .sc-mid{padding:10px 17px;border-top:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:space-between;gap:8px}
 .sc-mla{font-size:12px;color:var(--text);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px;letter-spacing:-.1px}
-.sc-foot{padding:8px 17px;background:rgba(255,255,255,0.02);border-top:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center}
+.sc-foot{padding:8px 17px;background:rgba(255,255,255,0.02);border-top:1px solid rgba(255,255,255,0.05);display:flex;justify-content:flex-start;align-items:center}
 .sc-margin{font-size:11px;color:var(--muted)}
 .sc-share{font-size:10px;padding:3px 10px;border:1px solid var(--border);border-radius:100px;background:rgba(255,255,255,.05);color:var(--muted);cursor:pointer;font-family:'Inter',sans-serif;transition:all .18s;letter-spacing:-.1px}
 .sc-share:hover{background:rgba(255,255,255,.18);color:#fff;border-color:rgba(255,255,255,.25);transform:none}
@@ -3578,7 +3578,7 @@ function om(c){
         const sent=getConstSentiment(c.id,x.alliance);
         const sentBar=sent
           ?`<div class="sent-wrap"><div class="sent-label">Community Poll \u00b7 ${sent.pct}% support \u00b7 ${sent.total} vote${sent.total!==1?'s':''}</div><div class="sent-bg"><div class="sent-fill" style="width:${sent.pct}%;background:${AC[x.alliance]||'#888'}"></div></div></div>`
-          :`<div class="sent-wrap"><div class="sent-label" style="color:var(--subtle)">Community Poll \u00b7 No votes yet \u2014 <a href="#" onclick="event.preventDefault();gv();cm()" style="color:var(--ldf);text-decoration:none;font-weight:600">Cast yours \u2197</a></div><div class="sent-bg"><div class="sent-fill" style="width:0%;background:var(--border)"></div></div></div>`;
+          :`<div class="sent-wrap"><div class="sent-label" style="color:var(--subtle)">Find your alignment \u2014 <a href="#" onclick="event.preventDefault();cm();setTimeout(openQuiz,200)" style="color:var(--ldf);text-decoration:none;font-weight:600">Know Your Politics \u2197</a></div><div class="sent-bg"><div class="sent-fill" style="width:0%;background:var(--border)"></div></div></div>`;
         const photoPath=PHOTO_MAP&&PHOTO_MAP[x.name];
         const avEl=photoPath?`<div class="av" style="background:${xCol}"><img src="${photoPath}" alt="${x.name}" style="width:100%;height:100%;object-fit:cover;border-radius:14px" onerror="this.parentElement.innerHTML='<svg viewBox=\\'0 0 24 24\\' fill=\\'none\\'><circle cx=\\'12\\' cy=\\'9\\' r=\\'4\\' fill=\\'rgba(255,255,255,0.92)\\'/><path d=\\'M4 21c0-4.418 3.582-8 8-8s8 3.582 8 8\\' fill=\\'rgba(255,255,255,0.75)\\'/></svg>'"></div>`:avSVG(xCol);
         return`<div class="ci">${avEl}<div style="flex:1"><div class="cn">${x.name}${x.incumbent?'<span class="itag">Sitting MLA</span>':''}</div><div class="cp">${xSym} ${x.party} \u00b7 Candidate 2026</div>${sentBar}</div><span class="chip ${x.alliance}" style="margin-left:auto">${xSym} ${x.alliance}</span></div>`;
