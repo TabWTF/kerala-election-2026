@@ -4414,25 +4414,50 @@ async function doShare(platform){
     const top=extra?.top||'LDF',score=extra?.score||0;
     const quizMsg=`Which party actually matches YOUR priorities? 🗳️\nTake this 2-minute Kerala election quiz and find out 👇\n${url}\n\n(I got ${top} — ${score}% match)`;
     const tweetMsg=`Which party actually matches YOUR priorities?\n\nTake this 2-minute Kerala election quiz and find out 👇\n${url}\n\n(My result: ${top} — ${score}% match)`;
-    // Try Web Share API with image (works on mobile)
-    // NOTE: do NOT pass `url` alongside `files` — it creates a second OG-preview image
-    // and causes iOS/WhatsApp to drop the text caption. URL is embedded in the text instead.
-    if(platform==='wa'||platform==='copy'||(platform==='x'&&navigator.canShare)){
+
+    // WhatsApp: iOS silently drops text when sharing files via Web Share API.
+    // Solution: copy message to clipboard first, share image via native sheet,
+    // user pastes message as caption in WhatsApp.
+    if(platform==='wa'){
+      try{await navigator.clipboard.writeText(quizMsg);}catch(e){}
       try{
         const blob=await generateQuizResultImage(top,score);
         const file=new File([blob],'kerala-quiz-result.jpg',{type:'image/jpeg'});
         if(navigator.canShare&&navigator.canShare({files:[file]})){
-          await navigator.share({files:[file],text:platform==='x'?tweetMsg:quizMsg});
+          showT('Message copied! Paste as caption in WhatsApp 📋');
+          await navigator.share({files:[file]});
           return;
         }
       }catch(e){}
+      // Fallback: open WhatsApp with text (no image)
+      window.open('https://wa.me/?text='+encodeURIComponent(quizMsg),'_blank');
+      return;
     }
-    // Fallback URL-based sharing
-    if(platform==='wa') window.open('https://wa.me/?text='+encodeURIComponent(quizMsg),'_blank');
-    else if(platform==='x') window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(tweetMsg),'_blank');
-    else if(platform==='li') window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(url),'_blank');
-    else if(platform==='copy'){
-      if(navigator.clipboard)navigator.clipboard.writeText(url).then(()=>showT('Link copied!'));
+
+    // X / Twitter
+    if(platform==='x'){
+      try{
+        const blob=await generateQuizResultImage(top,score);
+        const file=new File([blob],'kerala-quiz-result.jpg',{type:'image/jpeg'});
+        if(navigator.canShare&&navigator.canShare({files:[file]})){
+          await navigator.share({files:[file],text:tweetMsg});
+          return;
+        }
+      }catch(e){}
+      window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(tweetMsg),'_blank');
+      return;
+    }
+
+    // Copy link
+    if(platform==='copy'){
+      try{await navigator.clipboard.writeText(quizMsg);}catch(e){}
+      showT('Message & link copied! 📋');
+      return;
+    }
+
+    // LinkedIn fallback
+    if(platform==='li'){
+      window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(url),'_blank');
     }
     return;
   }
