@@ -1,1 +1,2 @@
-/api/counter/*  https://api.counterapi.dev/v1/:splat  200
+# Counter proxy is handled by netlify/functions/counter.js
+# This file is kept for future redirect rules

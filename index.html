@@ -4377,14 +4377,14 @@ function formatQuizCount(n){
   return String(n);
 }
 function fetchQuizCount(){
-  fetch(`/api/counter/${COUNTER_NS}/${COUNTER_KEY}`)
+  fetch(`/.netlify/functions/counter?path=${COUNTER_NS}/${COUNTER_KEY}`)
     .then(r=>r.json()).then(d=>{
       const el=document.getElementById('qtbCount');
       if(el && d.count!=null) el.textContent=formatQuizCount(d.count);
     }).catch(()=>{});
 }
 function incrementQuizCounter(){
-  fetch(`/api/counter/${COUNTER_NS}/${COUNTER_KEY}/up`)
+  fetch(`/.netlify/functions/counter?path=${COUNTER_NS}/${COUNTER_KEY}/up`)
     .then(r=>r.json()).then(d=>{
       const el=document.getElementById('qtbCount');
       if(el && d.count!=null) el.textContent=formatQuizCount(d.count);
