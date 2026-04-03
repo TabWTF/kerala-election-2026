@@ -3608,7 +3608,7 @@ function om(c){
     ${!c.verified?'<div style="font-size:11px;color:#B45309;margin-top:7px">&#9888; Pending official verification</div>':''}
   </div>`;
 
-  h+=`<div class="mactions"><button class="btn btn-d" onclick="cm();setTimeout(openQuiz,200)">Know Your Politics</button><button class="btn btn-o" onclick="window.open('https://myneta.info/Kerala2021/?Action=show_winners&sort=default','_blank')">Affidavit &#8599;</button><button class="btn btn-o" onclick="cm()">Close</button></div>`;
+  h+=`<div class="mactions"><button class="btn btn-d" onclick="cm();setTimeout(openQuiz,200)">Know Your Politics</button><button class="btn btn-o" onclick="cm()">Close</button></div>`;
   document.getElementById('mb').innerHTML=h;
   document.getElementById('ovl').classList.add('on');
 }
