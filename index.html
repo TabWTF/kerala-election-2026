@@ -4264,7 +4264,19 @@ function quizCanContinue(){
 function nextQuizStep(){
   if(!quizCanContinue())return;
   quizState.step=Math.min(4,quizState.step+1);
-  if(quizState.step===4)incrementQuizCounter();
+  if(quizState.step===4){
+    incrementQuizCounter();
+    // Track winning alignment anonymously
+    const res=getQuizResults().sort((a,b)=>b.score-a.score);
+    if(res[0]&&res[0].score>0){
+      fetch(`/.netlify/functions/counter?path=${COUNTER_NS}/quiz-align-${res[0].key.toLowerCase()}-v1/up`).catch(()=>{});
+    }
+    // Track focus categories chosen in step 2
+    (quizState.focus||[]).forEach(catId=>{
+      const k=catId.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
+      fetch(`/.netlify/functions/counter?path=${COUNTER_NS}/quiz-cat-${k}-v1/up`).catch(()=>{});
+    });
+  }
   renderQuiz();
 }
 function prevQuizStep(){

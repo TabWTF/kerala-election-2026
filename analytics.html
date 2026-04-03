@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Analytics — Kerala Election 2026</title>
 <meta name="robots" content="noindex,nofollow"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter',sans-serif;background:#0f1728;color:#e2e8f0;min-height:100vh}
@@ -14,8 +14,6 @@ body{font-family:'Inter',sans-serif;background:#0f1728;color:#e2e8f0;min-height:
 #gate p{font-size:14px;color:rgba(255,255,255,.5)}
 #pinInput{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:14px 20px;font-size:24px;letter-spacing:8px;color:#fff;width:180px;text-align:center;font-family:'Inter',sans-serif;outline:none}
 #pinInput:focus{border-color:rgba(179,38,30,.6)}
-#pinBtn{background:#b3261e;color:#fff;border:none;border-radius:12px;padding:13px 32px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
-#pinBtn:hover{background:#9b1b14}
 #pinErr{color:#f87171;font-size:13px;display:none}
 #dash{display:none;padding:32px 24px;max-width:1100px;margin:0 auto}
 .dash-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:12px}
@@ -29,22 +27,22 @@ body{font-family:'Inter',sans-serif;background:#0f1728;color:#e2e8f0;min-height:
 .card.accent{border-color:rgba(179,38,30,.35);background:rgba(179,38,30,.08)}
 .card.accent .card-val{color:#f87171}
 .section{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:22px;margin-bottom:20px}
-.section h3{font-size:14px;font-weight:600;color:rgba(255,255,255,.7);margin-bottom:18px;letter-spacing:.04em;text-transform:uppercase}
+.section h3{font-size:13px;font-weight:600;color:rgba(255,255,255,.5);margin-bottom:4px;letter-spacing:.06em;text-transform:uppercase}
+.section-sub{font-size:13px;color:rgba(255,255,255,.35);margin-bottom:20px}
 .bar-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-.bar-label{font-size:13px;color:rgba(255,255,255,.7);width:50px;text-align:right;flex-shrink:0}
+.bar-label{font-size:13px;color:rgba(255,255,255,.7);width:170px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-label.narrow{width:50px;text-align:right}
 .bar-track{flex:1;background:rgba(255,255,255,.07);border-radius:4px;height:10px;overflow:hidden}
 .bar-fill{height:100%;border-radius:4px;transition:width 1s ease}
-.bar-num{font-size:12px;color:rgba(255,255,255,.45);width:44px;flex-shrink:0}
-.ldf-bar{background:#b3261e}.udf-bar{background:#2b6cb0}.nda-bar{background:#d97706}.ind-bar{background:#64748b}
-.trend-row{display:flex;align-items:flex-end;gap:4px;height:80px}
-.trend-bar{flex:1;background:rgba(179,38,30,.5);border-radius:3px 3px 0 0;transition:height .8s ease;min-height:2px}
-.trend-labels{display:flex;justify-content:space-between;margin-top:6px}
-.trend-labels span{font-size:10px;color:rgba(255,255,255,.3)}
-.embed-note{font-size:13px;color:rgba(255,255,255,.4);margin-top:20px;line-height:1.6}
-.embed-note a{color:#93c5fd;text-decoration:none}
+.bar-num{font-size:12px;color:rgba(255,255,255,.45);width:80px;flex-shrink:0;text-align:right}
+.ldf-bar{background:#cc0000}.udf-bar{background:#2563EB}.bjp-bar{background:#FF6600}
+.cat-bar{background:rgba(99,102,241,.75)}
+.align-winner{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.1);margin-bottom:18px;display:none}
 .refresh-btn{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:7px 16px;color:rgba(255,255,255,.7);font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .18s}
 .refresh-btn:hover{background:rgba(255,255,255,.12);color:#fff}
 .spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
+.embed-note{font-size:13px;color:rgba(255,255,255,.4);margin-top:16px;line-height:1.6}
+.embed-note a{color:#93c5fd;text-decoration:none}
 @keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
@@ -74,7 +72,7 @@ body{font-family:'Inter',sans-serif;background:#0f1728;color:#e2e8f0;min-height:
     <div class="card accent">
       <div class="card-label">Quiz Takers</div>
       <div class="card-val" id="statQuiz">—</div>
-      <div class="card-sub">Total via counterapi.dev</div>
+      <div class="card-sub">Total completed quizzes</div>
     </div>
     <div class="card">
       <div class="card-label">Constituencies</div>
@@ -83,43 +81,72 @@ body{font-family:'Inter',sans-serif;background:#0f1728;color:#e2e8f0;min-height:
     </div>
     <div class="card">
       <div class="card-label">Candidates</div>
-      <div class="card-val" id="statCands">—</div>
+      <div class="card-val">~1,000+</div>
       <div class="card-sub">2026 contesting</div>
     </div>
     <div class="card">
-      <div class="card-label">Local Votes Cast</div>
-      <div class="card-val" id="statVotes">—</div>
-      <div class="card-sub">Opinion poll (this device)</div>
+      <div class="card-label">Most Aligned</div>
+      <div class="card-val" id="statTopAlliance">—</div>
+      <div class="card-sub">Alliance suggested most</div>
     </div>
   </div>
 
-  <!-- Local opinion poll breakdown -->
+  <!-- Quiz Alignment Results -->
   <div class="section">
-    <h3>Opinion Poll — Local Alliance Breakdown</h3>
-    <div class="bar-row"><div class="bar-label">LDF</div><div class="bar-track"><div class="bar-fill ldf-bar" id="ldfBar" style="width:0%"></div></div><div class="bar-num" id="ldfPct">0%</div></div>
-    <div class="bar-row"><div class="bar-label">UDF</div><div class="bar-track"><div class="bar-fill udf-bar" id="udfBar" style="width:0%"></div></div><div class="bar-num" id="udfPct">0%</div></div>
-    <div class="bar-row"><div class="bar-label">NDA</div><div class="bar-track"><div class="bar-fill nda-bar" id="ndaBar" style="width:0%"></div></div><div class="bar-num" id="ndaPct">0%</div></div>
-    <div class="bar-row"><div class="bar-label">IND</div><div class="bar-track"><div class="bar-fill ind-bar" id="indBar" style="width:0%"></div></div><div class="bar-num" id="indPct">0%</div></div>
-    <div class="card-sub" style="margin-top:12px">Based on localStorage opinion votes on this device/browser</div>
+    <h3>Quiz Alignment Results</h3>
+    <div class="section-sub">Which alliance the quiz is suggesting to people — tracked anonymously on completion</div>
+    <div id="alignWinner" class="align-winner">
+      <div style="font-size:28px" id="alignWinnerEmoji">🏆</div>
+      <div>
+        <div style="font-size:20px;font-weight:800" id="alignWinnerName">—</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px" id="alignWinnerLabel">Leading alignment</div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label narrow">LDF</div>
+      <div class="bar-track"><div class="bar-fill ldf-bar" id="alignLdfBar" style="width:0%"></div></div>
+      <div class="bar-num" id="alignLdfNum">— (0%)</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label narrow">UDF</div>
+      <div class="bar-track"><div class="bar-fill udf-bar" id="alignUdfBar" style="width:0%"></div></div>
+      <div class="bar-num" id="alignUdfNum">— (0%)</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label narrow">NDA</div>
+      <div class="bar-track"><div class="bar-fill bjp-bar" id="alignBjpBar" style="width:0%"></div></div>
+      <div class="bar-num" id="alignBjpNum">— (0%)</div>
+    </div>
+    <div style="font-size:12px;color:rgba(255,255,255,.3);margin-top:14px">Note: Only quizzes completed <em>after</em> this feature launched will appear here.</div>
   </div>
 
-  <!-- Counter growth trend (simulated from API) -->
+  <!-- Top Policy Priorities -->
+  <div class="section">
+    <h3>Top Policy Priorities</h3>
+    <div class="section-sub">What issues people care about most — from their Step 2 selections, sorted by popularity</div>
+    <div id="catBars">
+      <div style="font-size:13px;color:rgba(255,255,255,.3);padding:10px 0">Loading…</div>
+    </div>
+    <div style="font-size:12px;color:rgba(255,255,255,.3);margin-top:14px">Each quiz taker picks up to 5 categories. Tracked on quiz completion.</div>
+  </div>
+
+  <!-- Live Count -->
   <div class="section">
     <h3>Quiz Taker Count (Live)</h3>
-    <div style="font-size:42px;font-weight:800;color:#f87171" id="bigCount">—</div>
-    <div class="card-sub" style="margin-top:4px">People have taken the quiz at indiaelectiondatabase.com</div>
-    <div class="embed-note" style="margin-top:16px">
+    <div style="font-size:42px;font-weight:800;color:#f87171;margin-bottom:6px" id="bigCount">—</div>
+    <div style="font-size:12px;color:rgba(255,255,255,.35)">People have completed the quiz at indiaelectiondatabase.com</div>
+    <div class="embed-note">
       For full traffic analytics (pageviews, countries, devices) add
       <a href="https://plausible.io" target="_blank">Plausible.io</a> or
       <a href="https://analytics.google.com" target="_blank">Google Analytics</a> to index.html.<br>
-      For Netlify built-in analytics: <a href="https://app.netlify.com/sites/kerala-election-database/analytics" target="_blank">Netlify Analytics Dashboard ↗</a>
+      Netlify built-in: <a href="https://app.netlify.com/sites/kerala-election-database/analytics" target="_blank">Netlify Analytics Dashboard ↗</a>
     </div>
   </div>
 
-  <!-- Quick links -->
+  <!-- Quick Links -->
   <div class="section">
     <h3>Quick Links</h3>
-    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:4px">
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:8px">
       <a href="https://indiaelectiondatabase.com" target="_blank" style="color:#93c5fd;font-size:13px">🌐 Live Site</a>
       <a href="https://app.netlify.com/sites/kerala-election-database/deploys" target="_blank" style="color:#93c5fd;font-size:13px">🚀 Netlify Deploys</a>
       <a href="https://github.com/TabWTF/kerala-election-2026" target="_blank" style="color:#93c5fd;font-size:13px">⬡ GitHub Repo</a>
@@ -129,7 +156,25 @@ body{font-family:'Inter',sans-serif;background:#0f1728;color:#e2e8f0;min-height:
 </div>
 
 <script>
-const PIN='2026'; // ← change this PIN
+const PIN='2026';
+const NS='kerala-election-2026';
+const PROXY='/.netlify/functions/counter';
+
+const CATS=[
+  {id:'healthcare',      label:'Healthcare',         emoji:'🏥'},
+  {id:'jobs',            label:'Jobs & Economy',     emoji:'💼'},
+  {id:'education',       label:'Education & Youth',  emoji:'🎓'},
+  {id:'welfare',         label:'Welfare & Security', emoji:'🤝'},
+  {id:'infrastructure',  label:'Infrastructure',     emoji:'🏗️'},
+  {id:'environment',     label:'Environment & Land', emoji:'🌱'},
+  {id:'agriculture',     label:'Agriculture',        emoji:'🌾'},
+  {id:'accountability',  label:'Accountability',     emoji:'⚖️'},
+  {id:'women',           label:'Women & Safety',     emoji:'👩'},
+  {id:'housing',         label:'Housing',            emoji:'🏘️'},
+  {id:'technology',      label:'Technology',         emoji:'🧑‍💻'},
+  {id:'communal-harmony',label:'Communal Harmony',   emoji:'🕊️'},
+];
+
 function checkPin(){
   const v=document.getElementById('pinInput').value;
   if(v===PIN){
@@ -143,39 +188,74 @@ function checkPin(){
 }
 document.getElementById('pinInput').addEventListener('keydown',e=>{if(e.key==='Enter')checkPin();});
 
+async function getCount(key){
+  try{
+    const r=await fetch(`${PROXY}?path=${NS}/${key}`);
+    const d=await r.json();
+    return typeof d.count==='number'?d.count:0;
+  }catch(e){return 0;}
+}
+
 async function loadData(){
   document.getElementById('lastUpdated').innerHTML='<span class="spinner"></span>Fetching…';
-  // Quiz counter
-  try{
-    const r=await fetch('/.netlify/functions/counter?path=kerala-election-2026/quiz-takers-v1');
-    const d=await r.json();
-    if(d.count!=null){
-      document.getElementById('statQuiz').textContent=d.count.toLocaleString();
-      document.getElementById('bigCount').textContent=d.count.toLocaleString();
-    }
-  }catch(e){document.getElementById('statQuiz').textContent='N/A';}
 
-  // Local opinion poll
-  try{
-    const v=JSON.parse(localStorage.getItem('ked3_v')||'{}');
-    const t={LDF:0,UDF:0,NDA:0,IND:0};
-    Object.entries(v).forEach(([k,n])=>{const a=k.split('_')[1];if(t[a]!=null)t[a]+=n;});
-    const tot=Object.values(t).reduce((a,b)=>a+b,0);
-    document.getElementById('statVotes').textContent=tot;
-    ['LDF','UDF','NDA','IND'].forEach(a=>{
-      const pct=tot>0?Math.round(t[a]/tot*100):0;
-      const id=a.toLowerCase();
-      document.getElementById(id+'Bar').style.width=pct+'%';
-      document.getElementById(id+'Pct').textContent=pct+'%';
-    });
-  }catch(e){}
+  const [quizTotal, ldf, udf, bjp, ...catCounts] = await Promise.all([
+    getCount('quiz-takers-v1'),
+    getCount('quiz-align-ldf-v1'),
+    getCount('quiz-align-udf-v1'),
+    getCount('quiz-align-bjp-v1'),
+    ...CATS.map(c=>getCount(`quiz-cat-${c.id}-v1`)),
+  ]);
 
-  // Candidate count from global CANDS26 if available (loaded in parent)
-  try{
-    const cands=Object.values(window.opener?.CANDS26||{}).reduce((a,b)=>a+b.length,0);
-    if(cands>0)document.getElementById('statCands').textContent=cands.toLocaleString();
-    else document.getElementById('statCands').textContent='~1,000+';
-  }catch(e){document.getElementById('statCands').textContent='~1,000+';}
+  // Quiz total
+  document.getElementById('statQuiz').textContent=quizTotal.toLocaleString();
+  document.getElementById('bigCount').textContent=quizTotal.toLocaleString();
+
+  // Alignment bars
+  const alignTotal=ldf+udf+bjp||1;
+  const pLdf=Math.round(ldf/alignTotal*100);
+  const pUdf=Math.round(udf/alignTotal*100);
+  const pBjp=Math.round(bjp/alignTotal*100);
+  document.getElementById('alignLdfBar').style.width=pLdf+'%';
+  document.getElementById('alignLdfNum').textContent=`${ldf.toLocaleString()} (${pLdf}%)`;
+  document.getElementById('alignUdfBar').style.width=pUdf+'%';
+  document.getElementById('alignUdfNum').textContent=`${udf.toLocaleString()} (${pUdf}%)`;
+  document.getElementById('alignBjpBar').style.width=pBjp+'%';
+  document.getElementById('alignBjpNum').textContent=`${bjp.toLocaleString()} (${pBjp}%)`;
+
+  // Winner card
+  const alignData=[
+    {label:'LDF',count:ldf,color:'#cc0000',emoji:'🔴'},
+    {label:'UDF',count:udf,color:'#2563EB',emoji:'🔵'},
+    {label:'NDA',count:bjp,color:'#FF6600',emoji:'🟠'},
+  ].sort((a,b)=>b.count-a.count);
+  const top=alignData[0];
+  if(top.count>0){
+    const w=document.getElementById('alignWinner');
+    w.style.display='flex';
+    w.style.borderColor=top.color+'55';
+    document.getElementById('alignWinnerEmoji').textContent=top.emoji;
+    document.getElementById('alignWinnerName').textContent=top.label+' is leading';
+    document.getElementById('alignWinnerName').style.color=top.color;
+    document.getElementById('alignWinnerLabel').textContent=`${top.count} people aligned with ${top.label} out of ${ldf+udf+bjp} tracked`;
+    document.getElementById('statTopAlliance').textContent=top.label;
+  }
+
+  // Category bars sorted by count
+  const catData=CATS.map((c,i)=>({...c,count:catCounts[i]})).sort((a,b)=>b.count-a.count);
+  const catMax=Math.max(...catData.map(c=>c.count),1);
+  if(catData.every(c=>c.count===0)){
+    document.getElementById('catBars').innerHTML='<div style="font-size:13px;color:rgba(255,255,255,.3);padding:10px 0">No data yet — data will appear after people complete the quiz.</div>';
+  }else{
+    document.getElementById('catBars').innerHTML=catData.map(c=>{
+      const pct=Math.round(c.count/catMax*100);
+      return `<div class="bar-row">
+        <div class="bar-label">${c.emoji} ${c.label}</div>
+        <div class="bar-track"><div class="bar-fill cat-bar" style="width:${pct}%"></div></div>
+        <div class="bar-num">${c.count.toLocaleString()}</div>
+      </div>`;
+    }).join('');
+  }
 
   document.getElementById('lastUpdated').textContent='Last updated: '+new Date().toLocaleTimeString();
 }
