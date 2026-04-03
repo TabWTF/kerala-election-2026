@@ -12,7 +12,7 @@
 <meta property="og:url" content="https://indiaelectiondatabase.com/"/>
 <meta property="og:title" content="Kerala Election 2026 — Track All 140 Constituencies"/>
 <meta property="og:description" content="Candidates, alliances, and live data for all 140 Kerala seats. Take the political alignment quiz and find out which alliance matches your priorities."/>
-<meta property="og:image" content="https://kerala-election-database.netlify.app/assets/homepage/hero-background.jpg"/>
+<meta property="og:image" content="https://indiaelectiondatabase.com/assets/og-image.jpg"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
 <meta property="og:site_name" content="India Election Database"/>
@@ -22,7 +22,7 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Kerala Election 2026 — Track All 140 Constituencies"/>
 <meta name="twitter:description" content="Candidates, alliances, and live data for all 140 Kerala seats. Take the political alignment quiz and find out which alliance matches your priorities."/>
-<meta name="twitter:image" content="https://kerala-election-database.netlify.app/assets/homepage/hero-background.jpg"/>
+<meta name="twitter:image" content="https://indiaelectiondatabase.com/assets/og-image.jpg"/>
 
 <!-- WhatsApp-specific -->
 <meta property="og:image:type" content="image/jpeg"/>
@@ -1196,6 +1196,19 @@ header,.nav,.stats,.stats-footer{
   background:#fff;
   border-color:rgba(179,38,30,.18);
 }
+.lp-share-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:18px;padding:7px 18px;
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.35);
+  border-radius:24px;
+  color:rgba(255,255,255,.85);
+  font-size:13px;font-weight:600;
+  cursor:pointer;font-family:'Inter',sans-serif;
+  transition:all .18s;backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+.lp-share-btn:hover{background:rgba(255,255,255,.25);color:#fff;border-color:rgba(255,255,255,.55)}
 .ph{
   background:
     radial-gradient(circle at top right, rgba(179,38,30,.06), transparent 24%),
@@ -2122,6 +2135,10 @@ button,a,.quiz-pill,.quiz-promise,.quiz-const-option,.quiz-card,.quiz-answer,.qu
         Know Your Politics
       </button>
     </div>
+    <button class="lp-share-btn" onclick="openShareSheet('site')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="14" height="14"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      Share this site
+    </button>
   </div>
 
   <!-- Bottom bar: manifesto cards + date -->
