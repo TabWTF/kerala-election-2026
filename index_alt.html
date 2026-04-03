@@ -1965,6 +1965,28 @@ header,.nav,.stats,.stats-footer{
 #quizTakerBadge .qtb-num{font-weight:700;font-size:13px;color:#ffffff;margin-right:1px}
 @keyframes qtbPulse{0%,100%{opacity:1}50%{opacity:.35}}
 
+/* ── Platform Share Sheet ───────────────────────────────────── */
+#shareSheet{position:fixed;inset:0;z-index:11000;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:flex-end;justify-content:center;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#shareSheet.on{opacity:1;visibility:visible}
+.share-panel{width:100%;max-width:480px;background:#1a1f2e;border-radius:24px 24px 0 0;padding:24px 20px 32px;transform:translateY(100%);transition:transform .3s cubic-bezier(.32,1,.32,1)}
+#shareSheet.on .share-panel{transform:translateY(0)}
+.share-title{font-size:13px;font-weight:600;color:rgba(255,255,255,.5);text-align:center;margin-bottom:20px;letter-spacing:.4px;text-transform:uppercase}
+.share-platforms{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.share-btn{display:flex;flex-direction:column;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:14px 8px 12px;color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all .18s;letter-spacing:.1px}
+.share-btn svg{width:24px;height:24px}
+.share-btn:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);transform:translateY(-2px)}
+.share-wa{color:#25D366}.share-wa:hover{background:rgba(37,211,102,.12);border-color:rgba(37,211,102,.25)}
+.share-x{color:#fff}.share-x:hover{background:rgba(255,255,255,.1)}
+.share-li{color:#0A66C2}.share-li:hover{background:rgba(10,102,194,.15);border-color:rgba(10,102,194,.3)}
+.share-copy{color:rgba(255,255,255,.7)}.share-copy:hover{background:rgba(255,255,255,.1)}
+.share-close{width:100%;padding:13px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:14px;color:rgba(255,255,255,.7);font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all .18s}
+.share-close:hover{background:rgba(255,255,255,.12);color:#fff}
+/* Header share button */
+.hd-share{display:flex;align-items:center;gap:5px;padding:5px 12px 5px 10px;border:1px solid rgba(255,255,255,.15);border-radius:20px;background:rgba(255,255,255,.05);color:rgba(255,255,255,.8);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all .18s;white-space:nowrap}
+.hd-share svg{width:14px;height:14px;flex-shrink:0}
+.hd-share:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);color:#fff}
+@media(max-width:640px){.hd-share span{display:none}.hd-share{padding:6px}}
+
 /* ── Mobile optimizations ───────────────────────────────────── */
 /* Touch targets */
 button,a,.quiz-pill,.quiz-promise,.quiz-const-option,.quiz-card,.quiz-answer,.quiz-next,.quiz-secondary,.quiz-back,.quiz-close{
@@ -2215,6 +2237,32 @@ button,a,.quiz-pill,.quiz-promise,.quiz-const-option,.quiz-card,.quiz-answer,.qu
 <!-- ═══════════════════════════════════════════════════════════════
      APP WRAPPER
 ════════════════════════════════════════════════════════════════ -->
+<!-- Platform Share Sheet -->
+<div id="shareSheet" onclick="if(event.target===this)closeShareSheet()">
+  <div class="share-panel">
+    <div class="share-title">Share via</div>
+    <div class="share-platforms">
+      <button class="share-btn share-wa" onclick="doShare('wa')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </button>
+      <button class="share-btn share-x" onclick="doShare('x')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.912-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        X (Twitter)
+      </button>
+      <button class="share-btn share-li" onclick="doShare('li')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </button>
+      <button class="share-btn share-copy" onclick="doShare('copy')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copy Link
+      </button>
+    </div>
+    <button class="share-close" onclick="closeShareSheet()">Cancel</button>
+  </div>
+</div>
+
 <div id="quizTakerBadge" title="People who took the quiz"><span class="qtb-dot"></span><span class="qtb-num" id="qtbCount">—</span>&nbsp;took the quiz</div>
 <div id="appWrap">
 
@@ -2227,9 +2275,15 @@ button,a,.quiz-pill,.quiz-promise,.quiz-const-option,.quiz-card,.quiz-answer,.qu
         <div class="brand-sub">Assembly Election 2026 &middot; 140 Constituencies</div>
       </div>
     </a>
-    <div class="cd-pill">
-      <div class="cd-dot"></div>
-      <span class="cd-text"><span class="cd-num" id="cdNum">--</span> to Apr 9</span>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="cd-pill">
+        <div class="cd-dot"></div>
+        <span class="cd-text"><span class="cd-num" id="cdNum">--</span> to Apr 9</span>
+      </div>
+      <button class="hd-share" onclick="openShareSheet('site')" title="Share this site">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        <span>Share</span>
+      </button>
     </div>
   </div>
 </header>
@@ -3551,9 +3605,8 @@ function bgc(e){if(e.target===document.getElementById('ovl'))cm();}
 function gv(){if(curC){document.getElementById('vc').value=curC.id;pc2();}cm();sw('poll');}
 
 function shareC(id){
-  const u=location.origin+location.pathname+'?c='+id;
-  if(navigator.clipboard)navigator.clipboard.writeText(u);else{const t=document.createElement('textarea');t.value=u;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);}
-  showT('Link copied \u2014 share on WhatsApp or Instagram!');
+  const name=(CONSTITUENCIES||[]).find(c=>c.id===id)?.name||'this constituency';
+  openShareSheet('constituency',{id,name});
 }
 
 function fillVoteDrop(){const s=document.getElementById('vc');C.forEach(c=>s.innerHTML+=`<option value="${c.id}">${c.ac}. ${c.name} (${c.district})</option>`);}
@@ -4249,12 +4302,7 @@ function getQuizResults(){
 function shareQuizResult(){
   const results=getQuizResults().sort((a,b)=>b.score-a.score);
   const top=results[0];
-  const link=new URL(location.href);
-  link.searchParams.set('tab','quiz');
-  const text=`I took the Kerala 2026 Political Alignment quiz. My top alignment: ${top.label} (${top.score}% match). Curious about yours? ${link.toString()}`;
-  if(navigator.share){navigator.share({text}).catch(()=>{});return;}
-  if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>showT('Alignment text copied.'));return;}
-  window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank');
+  openShareSheet('quiz',{top:top.label,score:top.score});
 }
 function quizPromiseSort(item){
   return quizState.focus.includes(item.category)?0:1;
@@ -4264,6 +4312,61 @@ function quizButtonLabel(){
   return 'Continue →';
 }
 function quizProgressPct(){return Math.min(100,(quizState.step/3)*100);}
+
+// ── Platform-aware Share Sheet ───────────────────────────────
+const SITE_URL='https://indiaelectiondatabase.com';
+const SHARE_COPY={
+  site:{
+    wa:`Which party actually matches YOUR priorities? Take this 2-minute Kerala election quiz and find out 👇\nhttps://indiaelectiondatabase.com`,
+    x:`Who do YOUR priorities actually align with in Kerala 2026?\n\nTrack all 140 seats, candidates, alliances and take the political alignment quiz 🗳️\n\nhttps://indiaelectiondatabase.com`,
+    li:`https://indiaelectiondatabase.com`,
+    copy:`https://indiaelectiondatabase.com`,
+  },
+};
+let _shareCtx=null;
+function openShareSheet(type,extra){
+  _shareCtx={type,extra};
+  const el=document.getElementById('shareSheet');
+  if(el)el.classList.add('on');
+}
+function closeShareSheet(){
+  const el=document.getElementById('shareSheet');
+  if(el)el.classList.remove('on');
+  _shareCtx=null;
+}
+function doShare(platform){
+  if(!_shareCtx)return;
+  const{type,extra}=_shareCtx;
+  const siteUrl=SITE_URL;
+  let msg='',url=siteUrl;
+  if(type==='site'){
+    msg=SHARE_COPY.site[platform];
+    url=siteUrl;
+  }else if(type==='quiz'){
+    const quizUrl=siteUrl+'/?tab=quiz';
+    url=quizUrl;
+    if(platform==='wa') msg=`Which party actually matches YOUR priorities? Take this 2-minute Kerala election quiz and find out 👇\n${quizUrl}`;
+    else if(platform==='x') msg=`I took the Kerala 2026 Political Alignment quiz. My top match: ${extra?.top||''} (${extra?.score||0}%). Curious about yours? 🗳️\n${quizUrl}`;
+    else msg=quizUrl;
+  }else if(type==='constituency'){
+    const cUrl=`${siteUrl}/?c=${extra?.id}`;
+    url=cUrl;
+    if(platform==='wa') msg=`Check the Kerala 2026 candidates for ${extra?.name} 👇\n${cUrl}`;
+    else if(platform==='x') msg=`Kerala 2026: Who's contesting in ${extra?.name}? Candidates and alliance breakdown 🗳️\n${cUrl}`;
+    else msg=cUrl;
+  }
+  if(platform==='wa'){
+    window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+  }else if(platform==='x'){
+    window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(msg),'_blank');
+  }else if(platform==='li'){
+    window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(url),'_blank');
+  }else if(platform==='copy'){
+    if(navigator.clipboard){navigator.clipboard.writeText(url).then(()=>showT('Link copied!'));}
+    else{const t=document.createElement('textarea');t.value=url;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);showT('Link copied!');}
+  }
+  closeShareSheet();
+}
 
 // ── Quiz taker counter (counterapi.dev) ──────────────────────
 const COUNTER_NS = 'kerala-election-2026';
